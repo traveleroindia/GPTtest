@@ -72,7 +72,7 @@ const Navbar = () => {
                                 console.log(`Theme changed to ${currentTheme === 'light' ? 'dark' : 'light'}`); // Second function
                               }}
                             aria-label="Toggle Theme"
-                            className="px-4 py-2 text-3xl text-[--c1] hover:text-black hover:dark:text-white transition"
+                            className="px-4 py-2 text-3xl text-[--c1] hover:text-[--c1hover] transition"
                         >
                             {currentTheme === 'light' ? <BsFillCloudMoonFill /> : <BsCloudSunFill />}
                         </button>

@@ -103,7 +103,7 @@ import usePlacesAutocomplete, {
           onChange={handleInput}
           disabled={!ready}
           ref={inputRef}
-          placeholder="Search your Origin"
+          placeholder="Search your Destination"
           className="w-webkitfill py-3 m-1 px-2 rounded-md  focus:outline focus:outline-[--c1]"
         />
         {status === "OK" && (
