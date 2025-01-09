@@ -1,0 +1,117 @@
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+  } from "use-places-autocomplete";
+  import useOnclickOutside from "react-cool-onclickoutside";
+  import { useState, useEffect, useContext, useRef } from "react";
+  import { BookingContext } from "../bookings/bookingsMain";
+  import { RiResetLeftLine } from "react-icons/ri";
+  
+  export default function PlaceSearchDestination(props) {
+    // const { getLatLong } = useContext(BookingContext);
+  
+    const {
+      ready,
+      value,
+      suggestions: { status, data },
+      setValue,
+      clearSuggestions,
+    } = usePlacesAutocomplete({
+      requestOptions: {
+        componentRestrictions: { country: "in" },
+      },
+      debounce: 300,
+    });
+  
+    const [inputValue, setInputValue] = useState(value); // State to track input value
+    const inputRef = useRef();
+
+    
+    const clearFromField = () => {
+      setValue(""); // Clear the input value
+      setInputValue(""); // Update state to hide "Clear" button
+    };
+  
+    const ref = useOnclickOutside(() => {
+      clearSuggestions(); // Dismiss suggestions when clicking outside
+      console.log("To Address is : ",inputRef.current.value)
+      
+      props.settoAddress(inputRef.current.value)
+    });
+  
+
+    const handleInput = (e) => {
+      setValue(e.target.value); // Update controlled input value
+      setInputValue(e.target.value); // Update state
+    };
+  
+    const handleSelect =
+      ({ description }) =>
+      () => {
+        setValue(description, false);
+        clearSuggestions();
+  
+        getGeocode({ address: description }).then((results) => {
+          const { lat, lng } = getLatLng(results[0]);
+          props.setDestinationLong(lng);
+          props.setDestinationLat(lat);
+        });
+      };
+  
+    useEffect(() => {
+      if (props.DestinationLat && props.DestinationLong) {
+        // getLatLong(props.DestinationLat,props.DestinationLong);
+        console.log(`The Long is ${props.DestinationLat} & The Lat is ${props.DestinationLong}`);
+      }
+    }, [props.DestinationLat, props.DestinationLong,
+      //  getLatLong
+      ]);
+  
+    const renderSuggestions = () =>
+      data.map((suggestion) => {
+        const {
+          place_id,
+          structured_formatting: { main_text, secondary_text },
+        } = suggestion;
+  
+        return (
+          <li
+            key={place_id}
+            onClick={handleSelect(suggestion)}
+            className="mb-1 hover:border-y hover:border-[--c1] cursor-pointer"
+          >
+            <p className="text-sm font-medium">{main_text}</p>{" "}
+            <small className="text-xs">{secondary_text}</small>
+          </li>
+        );
+      });
+  
+    return (
+      <div ref={ref} className="w-full relative">
+        {inputValue && (
+          <span
+            className="flex items-center gap-2 absolute right-0 top-[-20px] pr-6 text-sm cursor-pointer hover:text-red-600"
+            onClick={clearFromField}
+          >
+            <RiResetLeftLine />
+            Clear
+          </span>
+        )}
+  
+        <input
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          ref={inputRef}
+          placeholder="Search your Origin"
+          className="w-webkitfill py-3 m-1 px-2 rounded-md  focus:outline focus:outline-[--c1]"
+        />
+        {status === "OK" && (
+          <ul className="min-w-[95%] absolute top-14 left-0 m-2  border border-[--c1] p-3 rounded z-10">
+            {renderSuggestions()}
+          </ul>
+        )}
+      </div>
+    );
+  }
+  
