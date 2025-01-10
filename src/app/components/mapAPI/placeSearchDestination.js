@@ -8,7 +8,7 @@ import usePlacesAutocomplete, {
   import { RiResetLeftLine } from "react-icons/ri";
   
   export default function PlaceSearchDestination(props) {
-    // const { getLatLong } = useContext(BookingContext);
+    const { GetDestinationInfo,TripType } = useContext(BookingContext);
   
     const {
       ready,
@@ -27,16 +27,19 @@ import usePlacesAutocomplete, {
     const inputRef = useRef();
 
     
-    const clearFromField = () => {
+    const clearDestinationField = () => {
       setValue(""); // Clear the input value
       setInputValue(""); // Update state to hide "Clear" button
-    };
+     };
+
+    useEffect(() => {
+      clearDestinationField();
+      GetDestinationInfo('','','');  {/* Passing Lat,Lng and Address to Context Method*/}
+    }, [TripType]);
+
   
     const ref = useOnclickOutside(() => {
       clearSuggestions(); // Dismiss suggestions when clicking outside
-      console.log("To Address is : ",inputRef.current.value)
-      
-      props.settoAddress(inputRef.current.value)
     });
   
 
@@ -53,19 +56,15 @@ import usePlacesAutocomplete, {
   
         getGeocode({ address: description }).then((results) => {
           const { lat, lng } = getLatLng(results[0]);
-          props.setDestinationLong(lng);
-          props.setDestinationLat(lat);
+          const address = inputRef.current.value
+          console.log(address);
+          
+          GetDestinationInfo(lat,lng,address);  {/* Passing Lat,Lng and Address to Context Method*/}
+
+          
         });
       };
-  
-    useEffect(() => {
-      if (props.DestinationLat && props.DestinationLong) {
-        // getLatLong(props.DestinationLat,props.DestinationLong);
-        console.log(`The Long is ${props.DestinationLat} & The Lat is ${props.DestinationLong}`);
-      }
-    }, [props.DestinationLat, props.DestinationLong,
-      //  getLatLong
-      ]);
+
   
     const renderSuggestions = () =>
       data.map((suggestion) => {
@@ -91,7 +90,7 @@ import usePlacesAutocomplete, {
         {inputValue && (
           <span
             className="flex items-center gap-2 absolute right-0 top-[-20px] pr-6 text-sm cursor-pointer hover:text-red-600"
-            onClick={clearFromField}
+            onClick={clearDestinationField}
           >
             <RiResetLeftLine />
             Clear

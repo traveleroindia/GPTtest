@@ -8,7 +8,7 @@ import usePlacesAutocomplete, {
   import { RiResetLeftLine } from "react-icons/ri";
   
   export default function PlaceSearchOrigin(props) {
-    const { getLatLong } = useContext(BookingContext);
+    const { GetOriginInfo,TripType } = useContext(BookingContext);
   
     const {
       ready,
@@ -27,14 +27,22 @@ import usePlacesAutocomplete, {
     const inputRef = useRef();
 
     
-    const clearFromField = () => {
+    const clearOriginField = () => {
       setValue(""); // Clear the input value
       setInputValue(""); // Update state to hide "Clear" button
+      if (inputRef.current) {
+        inputRef.current.focus(); // Focuses the input element
+      }
     };
+  useEffect(() => {
+    clearOriginField();
+    GetOriginInfo('','','');
+  }, [TripType]);
+
+
   
     const ref = useOnclickOutside(() => {
       clearSuggestions(); // Dismiss suggestions when clicking outside
-      console.log("From Address is : ",inputRef.current.value)
     });
   
 
@@ -51,17 +59,16 @@ import usePlacesAutocomplete, {
   
         getGeocode({ address: description }).then((results) => {
           const { lat, lng } = getLatLng(results[0]);
-          props.setOriginLong(lng);
-          props.setOriginLat(lat);
+          const address = inputRef.current.value
+          console.log(address);
+          
+          GetOriginInfo(lat,lng,address);  {/* Passing Lat,Lng and Address to Context Method*/}
+          
+          
         });
       };
   
-    useEffect(() => {
-      if (props.originLong && props.originLat) {
-        getLatLong(props.originLat, props.originLong);
-        console.log(`The Long is ${props.originLong} & The Lat is ${props.originLat}`);
-      }
-    }, [props.originLong, props.originLat, getLatLong]);
+
   
     const renderSuggestions = () =>
       data.map((suggestion) => {
@@ -87,7 +94,7 @@ import usePlacesAutocomplete, {
         {inputValue && (
           <span
             className="flex items-center gap-2 absolute right-0 top-[-20px] pr-6 text-sm cursor-pointer hover:text-red-600"
-            onClick={clearFromField}
+            onClick={clearOriginField}
           >
             <RiResetLeftLine />
             Clear

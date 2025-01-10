@@ -12,18 +12,8 @@ export default function BookingForm(props) {
 
     const [AirportFrom, setAirportFrom] = useState('From');
     const [AirportTo, setAirportTo] = useState('To');
-    
-    const [originLong, setOriginLong] = useState();
-    const [originLat, setOriginLat] = useState();
 
-    const [DestinationLat, setDestinationLat] = useState();
-    const [DestinationLong, setDestinationLong] = useState();
-    const [toAddress, settoAddress] = useState();
 
-console.log(toAddress);
-
-  
-  
 
 
     const SetAirportSelectionTExt = (e) => {
@@ -80,21 +70,14 @@ console.log(toAddress);
 
             
             <PlaceSearchOrigin
-              setOriginLong={setOriginLong}
-              setOriginLat={setOriginLat}
-            originLong={originLong}
-          originLat={originLat}
+         
           />
            </div> 
            {/* ===============================================================  To*/}
            <div className={`grid  mt-3 col-span-2 gap-2 ${TripType === 'Rental'?'hidden':''} `}>
             <label className="px-2 text-sm">{AirportTo}</label>
             <PlaceSearchDestination
-            setDestinationLong={setDestinationLong}
-              setDestinationLat={setDestinationLat}
-              DestinationLong={DestinationLong}
-              DestinationLat={DestinationLat}
-              settoAddress={settoAddress}
+         
               />
 
 
@@ -126,6 +109,5 @@ console.log(toAddress);
         </div>
         <button className=" py-3 px-5 w-52 mb-5 shadow-sm  rounded-md bg-[--c1] transition outline-transparent hover:outline hover:outline-1 hover:outline-[--c1] hover:bg-[--c1hover] hover:text-white mx-auto">Book Now</button>
        
-       <h2>{TripType}</h2>
         </>
         )};  
