@@ -36,7 +36,7 @@ import usePlacesAutocomplete, {
     };
   useEffect(() => {
     clearOriginField();
-    GetOriginInfo('','','');
+    // GetOriginInfo('','','');
   }, [TripType]);
 
 

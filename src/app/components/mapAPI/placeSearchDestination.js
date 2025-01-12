@@ -34,7 +34,7 @@ import usePlacesAutocomplete, {
 
     useEffect(() => {
       clearDestinationField();
-      GetDestinationInfo('','','');  {/* Passing Lat,Lng and Address to Context Method*/}
+      // GetDestinationInfo('','','');  {/* Passing Lat,Lng and Address to Context Method*/}
     }, [TripType]);
 
   

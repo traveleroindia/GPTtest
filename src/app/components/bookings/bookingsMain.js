@@ -7,9 +7,9 @@ import {createContext,useRef,useEffect } from 'react';
 import { useState } from 'react';
 import Map from '../mapAPI/map';
 import SearchedRides from './searchedRides'
+import DistanceAPIcall from '../mapAPI/distanceAPIcall'
+import DirectionMapPopup from '../mapAPI/directionMapPopup'
 
-// clearDestinationField
-// clearOriginField
 // =========================================================
 export default function BookingsMain() {
 
@@ -21,8 +21,8 @@ const trip=tripType; // sending this value to results
 // =========================================================  Setting and Updating Origin Information
 
 const [OriginInformation, setOriginInformation] = useState({
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
     address: null,
   });
   const updateOriginLocation = (newData) => {
@@ -38,8 +38,8 @@ const [OriginInformation, setOriginInformation] = useState({
    }
 // =========================================================  Setting and Updating Destination Information
   const [Destinationformation, setDestinationformation] = useState({
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
     address: null,
   });  
   const updateDestinationformation = (newData) => {
@@ -61,22 +61,49 @@ const [OriginInformation, setOriginInformation] = useState({
 
 const Trip=(e)=>{   // Contect function to recive the trip type
     setTripType(e)
-    console.log(e);
-  console.log(Destinationformation);
-  console.log(OriginInformation);
 }
-// ======================================================  Restting Form FIelds on Changing Trip Type or Submit Btn pressed
+// ======================================================  Pass lat long and get Distance and TIme
+const OriginLat = OriginInformation.lat;
+const OriginLng = OriginInformation.lng;
+
+const DestinationLat = Destinationformation.lat;
+const DestinationLng = Destinationformation.lng;
+
+//============================================================= All info in one
+const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${OriginInformation.lat},${OriginInformation.lng}&destination=${Destinationformation.lat},${Destinationformation.lng}&travelmode=driving`;
+
+
+useEffect(() => {
+  if(OriginInformation.lat === 0  || Destinationformation.lat === 0  ){
+    return;
+  }
+  console.log(tripType);
+  console.log(OriginInformation);
+  console.log(Destinationformation);
+  
+}, [OriginInformation,Destinationformation]);
 
  
+const DistanceandTime=(distance,time)=>{  // Get distacne and time 
+console.log(distance);
+console.log(time);
+
+
+}
+
+
+
 
 
 // ============================================================================================================================  
 
 return(
-<BookingContext.Provider value={{Trip:Trip, TripType:trip, GetOriginInfo:GetOriginInfo ,GetDestinationInfo:GetDestinationInfo}}>
+<BookingContext.Provider value={{Trip:Trip, TripType:trip, GetOriginInfo:GetOriginInfo ,GetDestinationInfo:GetDestinationInfo,OriginLat:OriginLat,OriginLng:OriginLng,DestinationLat:DestinationLat,DestinationLng:DestinationLng,DistanceandTime:DistanceandTime,mapURL:googleMapsUrl }}>
 <TripSelector/>
 <BookingForm />
 <SearchedRides/>
+<DistanceAPIcall/>
+<DirectionMapPopup/>
 {/* <Map/> */}
 </BookingContext.Provider>
 )};
