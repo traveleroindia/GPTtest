@@ -2,6 +2,6 @@
 import { ThemeProvider } from "next-themes";
 
 export const Providers = ({ children }) => {
-  return <ThemeProvider>{children}</ThemeProvider>;
+  return <ThemeProvider attribute="class" enableSystem={true}>{children}</ThemeProvider>;
 };
  

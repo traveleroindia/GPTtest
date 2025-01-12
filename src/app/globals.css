@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #f1f1f1;
+  --background: #e8e9ea;
   --foreground: #171717;
   --light: rgb(248, 245, 244);
-  --dark: #1e232e;
-  --bglight: rgb(232, 232, 232);
+  --dark: #2c2e32;
+  --bglight: rgb(210, 210, 210);
   --bgdark: #393f4c;
   --c1: #42c68f;
   --c1hover: #279e69;
@@ -21,7 +21,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-[data-theme="dark"] body{
+.dark body{
   color: var(--bglight);
   background: var(--dark);
 }

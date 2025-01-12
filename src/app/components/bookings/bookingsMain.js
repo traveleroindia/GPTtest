@@ -77,6 +77,6 @@ return(
 <TripSelector/>
 <BookingForm />
 <SearchedRides/>
-<Map/>
+{/* <Map/> */}
 </BookingContext.Provider>
 )};
