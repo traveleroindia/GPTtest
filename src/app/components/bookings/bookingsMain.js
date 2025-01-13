@@ -9,13 +9,14 @@ import Map from '../mapAPI/map';
 import SearchedRides from './searchedRides'
 import DistanceAPIcall from '../mapAPI/distanceAPIcall'
 import DirectionMapPopup from '../mapAPI/directionMapPopup'
-
+import TripCalculator from '../bookings/tripCalculator'
 // =========================================================
 export default function BookingsMain() {
 
 const [tripType, setTripType] = useState("One Way")
 
 const trip=tripType; // sending this value to results
+const[callfunction, setcallfunction] = useState(0) // using this state to call TripFareCalculate function
 
 
 // =========================================================  Setting and Updating Origin Information
@@ -83,27 +84,42 @@ useEffect(() => {
   
 }, [OriginInformation,Destinationformation]);
 
- 
+//=============================================================== Setting and getting distance from distanceAPIcall
+const [Distance, setDistance] = useState(null) 
 const DistanceandTime=(distance,time)=>{  // Get distacne and time 
-console.log(distance);
 console.log(time);
+setDistance(distance)
+console.log(Distance);
+setcallfunction(callfunction+1) // Changing the state will call the function 
+console.log(`${callfunction} Calling fare function`);
 
+}
+
+// =========================================================== Get fare Details
+
+const getFareDetails=(arg)=>{
+console.log(arg);
 
 }
 
 
+//===================================================== Available vehicles
 
-
+const AvailableVehicles = [1,3,5]
 
 // ============================================================================================================================  
 
 return(
-<BookingContext.Provider value={{Trip:Trip, TripType:trip, GetOriginInfo:GetOriginInfo ,GetDestinationInfo:GetDestinationInfo,OriginLat:OriginLat,OriginLng:OriginLng,DestinationLat:DestinationLat,DestinationLng:DestinationLng,DistanceandTime:DistanceandTime,mapURL:googleMapsUrl }}>
+<BookingContext.Provider value={{Trip:Trip, TripType:trip, GetOriginInfo:GetOriginInfo ,
+  GetDestinationInfo:GetDestinationInfo,OriginLat:OriginLat,OriginLng:OriginLng,
+  DestinationLat:DestinationLat,DestinationLng:DestinationLng,DistanceandTime:DistanceandTime,
+  mapURL:googleMapsUrl,getFareDetails:getFareDetails,Distance:Distance,AvailableVehicles:AvailableVehicles,tripType:tripType,callfunction:callfunction }}>
 <TripSelector/>
 <BookingForm />
 <SearchedRides/>
 <DistanceAPIcall/>
 <DirectionMapPopup/>
+<TripCalculator/>
 {/* <Map/> */}
 </BookingContext.Provider>
 )};
