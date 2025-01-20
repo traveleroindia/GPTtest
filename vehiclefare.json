@@ -2,74 +2,82 @@
     {
         "id": 1,
         "vehicle": "Wagon-R",
-        "imagelink": "http://dummyimage.com/88x53.png/ff4444/ffffff",
+        "imagelink": null,
         "baseKM": 20,
         "baseFare": 557,
         "perkmCharge": 12,
         "perHourCharge":120,
         "nightCharge": 250,
         "passanger": 4,
+        "tollIncluded":"Excluded",
         "tollCharge": null
     },
     {
         "id": 2,
         "vehicle": "Desire",
-        "imagelink": "http://dummyimage.com/97x87.png/cc0000/ffffff",
+        "imagelink": null,
         "baseKM": 20,
         "baseFare": 650,
         "perkmCharge": 14,
         "perHourCharge": 140,
         "nightCharge": 250,
         "passanger": 4,
+        "tollIncluded":"Excluded",
         "tollCharge": null
     },
     {
         "id": 3,
         "vehicle": "Ertiga",
-        "imagelink": "http://dummyimage.com/89x58.png/ff4444/ffffff",
+        "imagelink": null,
         "baseKM": 20,
         "baseFare": 950,
         "perkmCharge": 22,
         "perHourCharge": 58,
         "nightCharge": 296,
         "passanger": 6,
-        "tollCharge": 890
+        "tollIncluded":"Excluded",
+        "tollCharge": null
     },
     {
         "id": 4,
         "vehicle": "Innova",
-        "imagelink": "http://dummyimage.com/93x83.png/cc0000/ffffff",
-        "baseKM": 53,
-        "baseFare": 600,
+        "imagelink": null,
+
+        "baseKM": 20,
+        "baseFare": 800,
         "perkmCharge": 25,
         "perHourCharge": 58,
         "nightCharge": 286,
         "passanger": 6,
-        "tollCharge": 536
+        "tollIncluded":"Excluded",
+        "tollCharge": null
     },
     {
         "id": 5,
         "vehicle": "Innova Crysta",
-        "imagelink": "http://dummyimage.com/61x74.png/ff4444/ffffff",
-        "baseKM": 54,
-        "baseFare": 692,
+        "imagelink": null,
+
+        "baseKM": 20,
+        "baseFare":1111,
         "perkmCharge": 30,
         "perHourCharge": 53,
         "nightCharge": 267,
         "passanger": 4,
-        "tollCharge": 501
+        "tollIncluded":"Excluded",
+        "tollCharge": null
     },
 
     {
         "id": 6,
         "vehicle": "BYD",
-        "imagelink": "http://dummyimage.com/67x53.png/cc0000/ffffff",
+        "imagelink": null,
         "baseKM": 20,
-        "baseFare": 579,
+        "baseFare": 1300,
         "perkmCharge": 45,
         "perHourCharge": 62,
         "nightCharge": 251,
         "passanger": 6,
-        "tollCharge": 350
+        "tollIncluded":"Excluded",
+        "tollCharge": null
     }
 ]

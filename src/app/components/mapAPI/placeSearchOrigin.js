@@ -30,13 +30,13 @@ import usePlacesAutocomplete, {
     const clearOriginField = () => {
       setValue(""); // Clear the input value
       setInputValue(""); // Update state to hide "Clear" button
+      GetOriginInfo(0,0,'');  {/* Passing Lat,Lng and Address to Context Method*/}
       if (inputRef.current) {
         inputRef.current.focus(); // Focuses the input element
       }
     };
   useEffect(() => {
     clearOriginField();
-    // GetOriginInfo('','','');
   }, [TripType]);
 
 
@@ -102,6 +102,7 @@ import usePlacesAutocomplete, {
         )}
   
         <input
+        required
           value={value}
           onChange={handleInput}
           disabled={!ready}
@@ -110,7 +111,7 @@ import usePlacesAutocomplete, {
           className="w-webkitfill py-3 m-1 px-2 rounded-md  focus:outline focus:outline-[--c1]"
         />
         {status === "OK" && (
-          <ul className="min-w-[95%] absolute top-14 left-0 m-2  border border-[--c1] p-3 rounded z-10">
+          <ul className="min-w-[95%] absolute top-14 left-0 m-2  border border-[--c1] p-3 rounded z-10 bg-[--light] dark:bg-[--dark]">
             {renderSuggestions()}
           </ul>
         )}

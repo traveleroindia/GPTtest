@@ -48,7 +48,7 @@ const Dlng = Number(DestinationLng)
 
         // console.log(`Distance Matrix Response:',${distance}`);
         // console.log(`Distance Matrix Response:',${time}`);
-        console.log(response.rows[0]?.elements[0]);
+        console.log(response.rows[0]);
 
       })
       .catch((error) => {

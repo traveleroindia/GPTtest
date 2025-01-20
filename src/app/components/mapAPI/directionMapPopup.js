@@ -3,7 +3,7 @@ import { BookingContext } from "../bookings/bookingsMain";
 
 export default function DirectionMapPopup(){
               const {mapURL} = useContext(BookingContext);
-                console.log(mapURL);
+                // console.log(mapURL);
                 
               const openMapPopup = () => {
                 // Customize the URL to the Google Maps link with the coordinates
