@@ -19,7 +19,7 @@ export default function BookingForm(props) {
     setReturnPickupDate,
     setRideTypeOption,
     ReturnPickupDate,
-    errorMessage, setErrorMessage,
+    errorMessage, setErrorMessage,setDetailsofBokkingandfare,detailsofBokkingandfare
   } = useContext(BookingContext);
 
   const today = new Date();
@@ -62,6 +62,10 @@ returnDateRef.current.value= '';
     setPickupTime(null);
     setReturnPickupDate(null);
     console.log("Fields reset.");
+    setDetailsofBokkingandfare(false)  // Will reset and hide the information bar below the form
+    console.log(detailsofBokkingandfare);
+
+
   };
 
   useEffect(() => {

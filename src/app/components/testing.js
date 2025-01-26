@@ -9,39 +9,44 @@ import { GoChevronRight } from "react-icons/go";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useEffect, useState,useContext } from "react";
-import {BookingContext} from './bookingsMain';
+import {BookingContext} from '../components/bookings/bookingsMain';
 
 export default function  SearchedRides () {
 
   const { BookingFareDetails, tripDetails, detailsofBokkingandfare } = useContext(BookingContext);
 
-const [activeBadge, setActiveBadge] = useState(null); // Tracks the currently active badge
+const [kmInfoBadge , setkmInfoBadge] =  useState({});   
 
-
-
-  const toggleBadge = (index) => {
-    setActiveBadge((prevIndex) => (prevIndex === index ? null : index));
-  };
-
+useEffect(() => {
+    
+   console.log(kmInfoBadge);
+   
+}, [kmInfoBadge]);
 
 const returnDate = tripDetails.ReturnPickupDate;
+const toggleBadge = (index) => {
+    setkmInfoBadge((prev) => ({
+      ...prev,
+      [index]: !prev[index], // Toggle the state for the specific index
+      
+    }));
+    console.log(kmInfoBadge);
+  };
 
   if (!detailsofBokkingandfare || !BookingFareDetails || BookingFareDetails.length === 0) {
     return null; // Do not render if no details are available
 }
 
-
-const CaptureSelectionInfo=(index)=>{
-console.log(BookingFareDetails[index]);
-console.log(tripDetails);
-
-}
   return (
     <section className="container px-4 mx-auto">
+   
+
     <div className="flex flex-col mt-6">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+               
+
                     <table className="w-full p-5">
                         <thead>
                             <tr className="px-4 text-left text-sm border-b border-gray-700 ">
@@ -64,24 +69,21 @@ console.log(tripDetails);
                              {/* ========================================================== Vehicle and Fare Information 1 */}
                                     {BookingFareDetails?.map((e, index) => ( 
                                   <tr key={index} >
-                                      <td   className="p-2 flex flex-col items-center relative"> <FaCircleExclamation className="w-4 h-4 text-amber-500 shadow-sm absolute left-2 top-2 animate-pulse cursor-pointer" 
-                                      onClick={() => toggleBadge(index)}
-                                      />
+                                      <td   className="p-2 flex flex-col items-center relative"> <FaCircleExclamation className="w-4 h-4 text-amber-500 shadow-sm absolute left-2 top-2 animate-pulse cursor-pointer" onClick={() => setkmInfoBadge((prev) => !prev)} />
                                           <img className="w-16 h-16 rounded-full " src={e.imagelink} />
                                           <p className="pt-2 font-medium table">{e.vehicle}</p> <span className="text-xs text-gray-500 ">Or Equilant</span>
 
-                                          {activeBadge === index &&<div className={`bg-[--bglight] dark:bg-[--bgdark] w-60 shadow-xl  rounded-lg absolute left-6 top-5 text-xs z-10 `}>
+                                          <div className={`bg-[--bglight] dark:bg-[--bgdark] w-60 shadow-xl  rounded-lg absolute left-6 top-5 text-xs ${kmInfoBadge === true ? "block" : "hidden"}`}>
                                               <ul className="list-disc p-3 ml-3 relative">
-                                                  <IoCloseCircleSharp className="w-5 h-5 absolute right-1 top-1 hover:text-gray-200  " 
-                                                  onClick={() => toggleBadge(index)} />
+                                                  <IoCloseCircleSharp className="w-5 h-5 absolute right-1 top-1 hover:text-gray-200 " onClick={() => { toggleBadge(index) }} />
                                                   <br />
-                                                  <li>Pay {e.perkmCharge} rupees/Km after {e.calculatedBaseKM} Km</li>
+                                                  <li>Pay {e.perkmCharge}rupees/Km after {e.calculatedBaseKM} Km</li>
                                                   <li>Parking is payable by Passanger</li>
                                                   <li>Night Charges starts after 07:00 PM</li>
                                                   <li>Night Charges {e.nightCharge} INR till 08:00 AM</li>
                                                   <li>Pay {e.perHourCharge} INR per/Hr after 4Hr </li>
                                               </ul>
-                                          </div>}
+                                          </div>
                                       </td>
                                       {/* =======================================   From */}
                                       <td className="p-2 text-center place-items-center "> <div className="w-full flex-col items-center flex justify-center">
@@ -135,7 +137,7 @@ console.log(tripDetails);
                                       <td className="  place-items-center text-center"> <div className="w-full flex flex-col items-center justify-center">
                                           <GiPathDistance className="w-5 h-5 text-center" />
                                           <p className="text-xs font-semibold flex gap-3">{e.calculatedBaseKM} Km </p>
-                                          <button className="shadow-md px-4 py-2  mt-2 cursor-pointer bg-[--c1] capitalize transition-colors duration-300 transform bg-green-300  text-black rounded-md text-2xl font-semibold hover:bg-green-400 hover:scale-95 flex items-center justify-center " onClick={()=>CaptureSelectionInfo(index)}>BOOK<GoChevronRight /></button></div></td>
+                                          <button className="shadow-md px-4 py-2  mt-2 cursor-pointer bg-[--c1] capitalize transition-colors duration-300 transform bg-green-300  text-black rounded-md text-2xl font-semibold hover:bg-green-400 hover:scale-95 flex items-center justify-center ">BOOK<GoChevronRight /></button></div></td>
 
                                   </tr> )) }
                         </tbody>
@@ -158,13 +160,13 @@ console.log(tripDetails);
 
 
 // <tr>
-//                                       <td className="p-2 flex flex-col items-center relative"> <FaCircleExclamation className="w-4 h-4 text-amber-500 shadow-sm absolute left-2 top-2 animate-pulse cursor-pointer" onClick={() => setKmInfoBadge((prev) => !prev)} />
+//                                       <td className="p-2 flex flex-col items-center relative"> <FaCircleExclamation className="w-4 h-4 text-amber-500 shadow-sm absolute left-2 top-2 animate-pulse cursor-pointer" onClick={() => setkmInfoBadge((prev) => !prev)} />
 //                                           <img className="w-16 h-16 rounded-full " src="https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Wagon-R-tour/9442/1675922710720/front-left-side-47.jpg" />
 //                                           <p className="pt-2 font-medium table">Innova-Crysta</p> <span className="text-xs text-gray-500 ">Or Equilant</span>
 
 //                                           <div className={`bg-[--bglight] dark:bg-[--bgdark] w-60 shadow-xl  rounded-lg absolute left-6 top-5 text-xs ${kmInfoBadge === true ? "block" : "hidden"}`}>
 //                                               <ul className="list-disc p-3 ml-3 relative">
-//                                                   <IoCloseCircleSharp className="w-5 h-5 absolute right-1 top-1 hover:text-gray-200 " onClick={() => { setKmInfoBadge(false) }} />
+//                                                   <IoCloseCircleSharp className="w-5 h-5 absolute right-1 top-1 hover:text-gray-200 " onClick={() => { setkmInfoBadge(false) }} />
 //                                                   <br />
 //                                                   <li>Pay 15rupees/Km after 254 Km</li>
 //                                                   <li>Parking is payable by Passanger</li>

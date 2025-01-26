@@ -5,21 +5,17 @@ import { BookingContext } from "./bookingsMain";
 export default function TripCalculator() {
     const { Distance, getFareDetails,  TripType } = useContext(BookingContext);
     
-    const distanceNumber = Math.ceil(parseFloat(Distance) || 0);
-    const AvailableVehicles = [3, 4, 5];
+    // const distanceNumber = Math.ceil(parseFloat(Distance) || 0);
+    const AvailableVehicles = [1, 2, 6];
 
    
-
-    // console.log(Distance," recived distance");
-    
-    // console.log("Calculated Distance Number:", distanceNumber);
     
     let fareDetails = [];
 
     useEffect(() => {
         if(!Distance) return // will return if distance is not set
        
-       TripFareCalculate(AvailableVehicles, TripType, distanceNumber);  // input arguments
+       TripFareCalculate(AvailableVehicles, TripType, Distance);  // input arguments
        getFareDetails(fareDetails); // sending parent updated fare details
 
     }, [Distance]);
@@ -44,7 +40,7 @@ export default function TripCalculator() {
                         passanger: arg.passanger,
                         tollCharge: arg.tollCharge,
                         basefare: arg.baseFare,
-                        discount : (arg.baseFare*.5),
+                        discount : Math.round(arg.baseFare*.5),
                     });
                 } else if (km <= 40) {
                     const calculatedFare = (km / arg.baseKM) * arg.baseFare;
@@ -60,7 +56,7 @@ export default function TripCalculator() {
                         passanger: arg.passanger,
                         tollCharge: arg.tollCharge,
                         basefare: arg.baseFare,
-                        discount : (arg.baseFare*.5),
+                        discount : Math.round(arg.baseFare*.5),
                     });
                 } else {
                     const calculatedFare = (km / arg.baseKM) * arg.baseFare;
@@ -76,7 +72,7 @@ export default function TripCalculator() {
                         passanger: arg.passanger,
                         tollCharge: arg.tollCharge,
                         basefare: arg.baseFare,
-                        discount : (arg.baseFare*.7),
+                        discount : Math.round(arg.baseFare*.7),
                     });
                 }
             });
@@ -101,7 +97,7 @@ export default function TripCalculator() {
                         passanger: arg.passanger,
                         tollCharge: arg.tollCharge,
                         tollIncluded : arg.tollIncluded,
-                        discount : (arg.baseFare*.10),
+                        discount : Math.round(arg.baseFare*.10),
                     });
                 }
 
@@ -121,7 +117,7 @@ export default function TripCalculator() {
                         tollCharge: arg.tollCharge,
                         tollIncluded : arg.tollIncluded,
 
-                        discount : (arg.baseFare*.10),
+                        discount : Math.round(arg.baseFare*.10),
                     });
                 }
                 else {
@@ -140,7 +136,7 @@ export default function TripCalculator() {
                         tollCharge: 200,
                         tollIncluded : 'included',
 
-                        discount : (arg.baseFare*.10),
+                        discount : Math.round(arg.baseFare*.10),
                     });
                 }
             });

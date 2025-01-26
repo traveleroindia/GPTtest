@@ -1,3 +1,5 @@
+import Testing from "../testing";
+
 import { createContext, useRef, useEffect, useState } from "react";
 import TripSelector from './tripSelector';
 import BookingForm from './bookingForm';
@@ -15,13 +17,15 @@ export default function BookingsMain() {
     const [Destinationformation, setDestinationformation] = useState({ lat: 0, lng: 0, address: '' });
     const [Distance, setDistance] = useState(null);
     const [Time, setTime] = useState(null);
-    const [BookingFareDetails, setBookingFareDetails] = useState([]); // Use state here
+    const [BookingFareDetails, setBookingFareDetails] = useState([]);
     const [TripDate, setTripDate] = useState(null);
     const [pickupTime, setPickupTime] = useState(null);
     const [ReturnPickupDate, setReturnPickupDate] = useState(null);
-    const [RideTypeOption, setRideTypeOption] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null);
+    const [RideTypeOption, setRideTypeOption] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [detailsofBokkingandfare, setDetailsofBokkingandfare] = useState(false);
 
+    const [tripDetails, setTripDetails] = useState({});
 
         
     
@@ -55,10 +59,10 @@ export default function BookingsMain() {
     
     //============================================================= Update distance and call function
     const DistanceandTime = (distance, time) => {
-        setDistance(distance);
-        setTime(time);
-       
+        setDistance(Math.ceil(parseFloat(distance))); // Corrected variable name and parentheses
+        setTime(time); // This remains the same
     };
+    
 
     //============================================================================ Get fare details
     const getFareDetails = (fareDetails) => {
@@ -76,70 +80,56 @@ export default function BookingsMain() {
     //     console.log("Destination:", Destinationformation);
     // }, [OriginInformation, Destinationformation]);
 // =============================================================================== OnSUbmit set all states from all otehrcomponents into one
-let tripDetails =[]
 useEffect(() => {
-
-    tripDetails = {
+    setTripDetails({
         OriginInformation,
         Destinationformation,
         googleMapsUrl,
         tripType,
-        Distance,
-        TripDate,
+        Time,
+        TripDate: TripDate ? TripDate.toLocaleDateString() : null,
         pickupTime,
-        ReturnPickupDate,
+        ReturnPickupDate: ReturnPickupDate ? ReturnPickupDate.toLocaleDateString() : null,
         RideTypeOption,
-      };
+    });
+}, [OriginInformation, Destinationformation, googleMapsUrl, tripType, Time, Distance, TripDate, pickupTime, ReturnPickupDate, RideTypeOption]);
 
-}, [tripDetails]);
 
 
 
 const HandleSearchedRides = () => {
-    // Check Origin Information
-    if (tripDetails.OriginInformation.lat === 0) {
+    // Validate inputs
+    if (!tripDetails.OriginInformation || tripDetails.OriginInformation.lat === 0) {
         setErrorMessage('Fill Origin Address');
-        console.log(tripDetails.Destinationformation.lat);
-        return; // Exit if condition is not met
+        return;
     }
-
-
-    // Check Destination Information for Round Trip
-    if (tripDetails.Destinationformation.lat === 0 && tripDetails.tripType !== "Rental") {
+    if (tripDetails.tripType !== "Rental" && (!tripDetails.Destinationformation || tripDetails.Destinationformation.lat === 0)) {
         setErrorMessage('Fill Destination Address');
-        console.log('Destination address is missing for Round Trip');
-        return; // Exit if condition is not met
+        return;
     }
-
-     // Check Trip date is empty
-     if (tripDetails.TripDate === null) {
+    if (!tripDetails.TripDate) {
         setErrorMessage('Choose your trip Date');
-        console.log('Trip date empty');
-        return; // Exit if condition is not met
+        return;
     }
-
-     // Check pickupTime is empty
-     if (tripDetails.pickupTime === null) {
+    if (!tripDetails.pickupTime) {
         setErrorMessage('Choose your Pickup Time');
-        console.log('pickupTime  empty');
-        return; // Exit if condition is not met
+        return;
     }
-
-
-      // Check Destination Information for Round Trip
-      if (tripDetails.ReturnPickupDate === null && tripDetails.tripType === "Round Trip") {
+    if (tripDetails.tripType === "Round Trip" && !tripDetails.ReturnPickupDate) {
         setErrorMessage('Choose your Return Date');
-        console.log('Return date is missing for Round Trip');
-        return; // Exit if condition is not met
+        return;
     }
 
-    // Reset error message if Destination is valid
     setErrorMessage('');
-
-    // Proceed with handling the ride search
     console.log("Info received on submit", BookingFareDetails);
     console.log("Trip Details are", tripDetails);
+    setDetailsofBokkingandfare(true);
+
+    return BookingFareDetails, tripDetails;
 };
+
+
+// ========================================================================
 
 
     return (
@@ -157,7 +147,7 @@ const HandleSearchedRides = () => {
                 mapURL: googleMapsUrl,
                 getFareDetails,
                 Distance,
-                BookingFareDetails,
+                BookingFareDetails,tripDetails,
                 HandleSearchedRides,
                 setTripDate,
                 TripDate,
@@ -165,15 +155,16 @@ const HandleSearchedRides = () => {
                 setReturnPickupDate,
                 ReturnPickupDate,
                 setRideTypeOption,
-                errorMessage, setErrorMessage
+                errorMessage, setErrorMessage,detailsofBokkingandfare,setDetailsofBokkingandfare
             }}
         >
             <TripSelector />
             <BookingForm />
             <DistanceAPIcall />
-            {/* <SearchedRides /> */}
+            <SearchedRides />
             <DirectionMapPopup />
             <TripCalculator />
+            {/* <Testing/> */}
         </BookingContext.Provider>
     );
 }

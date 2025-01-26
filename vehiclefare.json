@@ -1,8 +1,9 @@
 [
     {
         "id": 1,
+        "baseHr":4,
         "vehicle": "Wagon-R",
-        "imagelink": null,
+        "imagelink": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Wagon-R-tour/9442/1675922710720/front-left-side-47.jpg",
         "baseKM": 20,
         "baseFare": 557,
         "perkmCharge": 12,
@@ -10,12 +11,13 @@
         "nightCharge": 250,
         "passanger": 4,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     },
     {
         "id": 2,
+        "baseHr":4,
         "vehicle": "Desire",
-        "imagelink": null,
+        "imagelink":"https://imgd.aeplcdn.com/1920x1080/n/cw/ec/170173/dzire-2024-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80&q=80",
         "baseKM": 20,
         "baseFare": 650,
         "perkmCharge": 14,
@@ -23,12 +25,13 @@
         "nightCharge": 250,
         "passanger": 4,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     },
     {
         "id": 3,
+        "baseHr":4,
         "vehicle": "Ertiga",
-        "imagelink": null,
+        "imagelink": "https://shivamautozone.com/wp-content/uploads/2024/09/ERTIGA_MAGMA_GREY-1.webp",
         "baseKM": 20,
         "baseFare": 950,
         "perkmCharge": 22,
@@ -36,13 +39,13 @@
         "nightCharge": 296,
         "passanger": 6,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     },
     {
         "id": 4,
+        "baseHr":4,
         "vehicle": "Innova",
-        "imagelink": null,
-
+        "imagelink": "https://imgk.timesnownews.com/story/1554719922-Toyota_Innova_Crysta_1.jpg",
         "baseKM": 20,
         "baseFare": 800,
         "perkmCharge": 25,
@@ -50,13 +53,13 @@
         "nightCharge": 286,
         "passanger": 6,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     },
     {
         "id": 5,
+        "baseHr":4,
         "vehicle": "Innova Crysta",
-        "imagelink": null,
-
+        "imagelink": "https://shivamautozone.com/wp-content/uploads/2024/09/ERTIGA_MAGMA_GREY-1.webp",
         "baseKM": 20,
         "baseFare":1111,
         "perkmCharge": 30,
@@ -64,13 +67,14 @@
         "nightCharge": 267,
         "passanger": 4,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     },
 
     {
         "id": 6,
+        "baseHr":4,
         "vehicle": "BYD",
-        "imagelink": null,
+        "imagelink": "https://evlife.world/wp-content/uploads/2024/06/Qin-L.jpeg",
         "baseKM": 20,
         "baseFare": 1300,
         "perkmCharge": 45,
@@ -78,6 +82,6 @@
         "nightCharge": 251,
         "passanger": 6,
         "tollIncluded":"Excluded",
-        "tollCharge": null
+        "tollCharge":"As per Actual"
     }
 ]
