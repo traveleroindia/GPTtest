@@ -3,12 +3,10 @@ import Testing from "../testing";
 import { createContext, useRef, useEffect, useState } from "react";
 import TripSelector from './tripSelector';
 import BookingForm from './bookingForm';
-import Map from '../mapAPI/map';
 import SearchedRides from './searchedRides';
 import DistanceAPIcall from '../mapAPI/distanceAPIcall';
 import DirectionMapPopup from '../mapAPI/directionMapPopup';
 import TripCalculator from '../bookings/tripCalculator';
-
 export const BookingContext = createContext();
 
 export default function BookingsMain() {
@@ -131,7 +129,6 @@ const HandleSearchedRides = () => {
 
 // ========================================================================
 
-
     return (
         <BookingContext.Provider
             value={{
@@ -159,7 +156,7 @@ const HandleSearchedRides = () => {
             }}
         >
             <TripSelector />
-            <BookingForm />
+            <BookingForm /> 
             <DistanceAPIcall />
             <SearchedRides />
             <DirectionMapPopup />

@@ -1,7 +1,9 @@
 
+import dynamic from 'next/dynamic';
 import "./globals.css";
 import {Providers} from './provider'
-import Navbar from "./components/navbar/navbar";
+// import Navbar from "./components/navbar/navbar";
+const Navbar = dynamic(() => import('./components/navbar/navbar'), { ssr: true });
 
 
 
@@ -15,6 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
          <script
+          async
           defer
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}&libraries=places`}
         ></script>
@@ -23,11 +26,7 @@ export default function RootLayout({ children }) {
         <Providers>
         <Navbar />
         {children}
-
         </Providers>
-      
-
-
       </body>
     </html>
   );

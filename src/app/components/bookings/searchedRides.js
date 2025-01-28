@@ -10,9 +10,9 @@ import { FaCircleExclamation } from "react-icons/fa6";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useEffect, useState,useContext } from "react";
 import {BookingContext} from './bookingsMain';
-
+import { useRouter } from 'next/navigation';
 export default function  SearchedRides () {
-
+    const Router = useRouter();
   const { BookingFareDetails, tripDetails, detailsofBokkingandfare } = useContext(BookingContext);
 
 const [activeBadge, setActiveBadge] = useState(null); // Tracks the currently active badge
@@ -34,6 +34,9 @@ const returnDate = tripDetails.ReturnPickupDate;
 const CaptureSelectionInfo=(index)=>{
 console.log(BookingFareDetails[index]);
 console.log(tripDetails);
+localStorage.setItem('RidesSearched', 'true');
+localStorage.setItem("BookingData",JSON.stringify({Fare:(BookingFareDetails[index]),Trip:tripDetails}));
+Router.push('/user')
 
 }
   return (
@@ -146,6 +149,7 @@ console.log(tripDetails);
                 </div>
             </div>
         </div>
+
     </div>
 
        

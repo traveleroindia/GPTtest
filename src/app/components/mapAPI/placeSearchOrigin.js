@@ -100,16 +100,19 @@ import usePlacesAutocomplete, {
             Clear
           </span>
         )}
-  
-        <input
-        required
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-          ref={inputRef}
-          placeholder="Search your Origin"
-          className="w-webkitfill py-3 m-1 px-2 rounded-md  focus:outline focus:outline-[--c1]"
-        />
+ {!ready ? (
+  <div className="animate-pulse m-1 px-3 py-3 text-gray-600 bg-[--light] rounded-md dark:bg-[--foreground] "> Please wait Loading ...</div>
+) : (
+  <input
+    required
+    value={value}
+    onChange={handleInput}
+    disabled={!ready}
+    ref={inputRef}
+    placeholder="Search your Origin"
+    className="w-webkitfill py-3 m-1 px-2 rounded-md focus:outline focus:outline-[--c1]"
+  />
+)}
         {status === "OK" && (
           <ul className="min-w-[95%] absolute top-14 left-0 m-2  border border-[--c1] p-3 rounded z-10 bg-[--light] dark:bg-[--dark]">
             {renderSuggestions()}

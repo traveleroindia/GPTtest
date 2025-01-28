@@ -28,13 +28,12 @@ const Navbar = () => {
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
-        console.log('working');
         
 
     };
 
     return (
-        <nav className="lg:px-20 md:px-5 py-2 md:py-4 lg:shadow-lg  shadow-lg z-10">
+        <nav className="lg:px-20 md:px-5 py-2 md:py-1 lg:shadow-lg  shadow-lg sticky top-0 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90 z-50">
             <div className="flex justify-between items-center">
                 <div className="text-2xl font-bold w-60 max-w-full px-4 xl:mr-12">
                     <Image src={LOGO} className="w-[150px]" alt="logo" />
@@ -46,8 +45,8 @@ const Navbar = () => {
                 </div>
                 <div
                     className={`fixed z-50 top-0 left-0 w-3/4 h-full  shadow-lg transition-transform duration-300 ${
-                        isOpen ? 'translate-x-0' : '-translate-x-full'
-                    } lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-none`}
+                        isOpen ? 'translate-x-0' : '-translate-x-full' } lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between 
+                        lg:items-center lg:shadow-none bg-[--light] dark:bg-[--dark] py-2 lg:bg-transparent lg:dark:bg-transparent`}
                 >
                     <div className="lg:hidden flex items-center flex-col max-w-48 mb-8">
                         <Image src={LOGO} priority="low" alt="logo" />
@@ -76,10 +75,10 @@ const Navbar = () => {
                         >
                             {currentTheme === 'light' ? <BsFillCloudMoonFill /> : <BsCloudSunFill />}
                         </button>
-                        <Link href="/login" className="px-4 py-2 rounded ml-4 bg-[--c1] text-white hover:transform-sc">
+                        <Link href="/login" className="px-4 py-2 rounded ml-4 bg-[--c1] w-36 text-white hover:transform-sc">
                             Login
                         </Link>
-                        <Link href="/signup" className="px-4 py-2 rounded ml-4 bg-gray-800 text-white dark:bg-[--light] dark:text-black">
+                        <Link href="/signup" className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black">
                             Signup
                         </Link>
                     </div>

@@ -4,11 +4,11 @@
 
 :root {
   --background: #e8e9ea;
-  --foreground: #171717;
+  --foreground: rgb(17,24,39);
   --light: rgb(248, 245, 244);
-  --dark: #2c2e32;
+  --dark: rgb(37, 40, 49);
   --bglight: rgb(210, 210, 210);
-  --bgdark: #393f4c;
+  --bgdark: rgb(42, 46, 56);;
   --c1: #42c68f;
   --c1hover: #279e69;
 }
