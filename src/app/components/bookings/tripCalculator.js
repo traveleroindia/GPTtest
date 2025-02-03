@@ -20,125 +20,61 @@ export default function TripCalculator() {
 
     }, [Distance]);
 
-    function TripFareCalculate(Vehiclefilter, tripType, km) {
+    function TripFareCalculate(Vehiclefilter, TripType, km) {
         const FilteredVehicles = vehiclefare.filter((vehicles) =>
             Vehiclefilter.includes(vehicles.id)
         );
 
 
-        if (tripType === "One Way") {
+        if (TripType === "One Way") {
             FilteredVehicles.forEach((arg) => {
-                if (km <= 20) {
+                 let RoundKM = Math.ceil(km / 20) * 20;
+                    const fare = ((RoundKM / arg.km) * arg.baseFare);
+                    const discount = Math.round(fare*.1); // 10% Discount on One way trip
+                    const fareWithAddedDiscount = fare + discount
+                    const finalFare = fare;
+
                     fareDetails.push({
-                        fare: arg.baseFare,
+                        fare: Math.round(fareWithAddedDiscount),
+                        discount : Math.round(discount),
+                        finalFare : Math.round(finalFare),
                         vehicle: arg.vehicle,
                         imagelink: arg.imagelink,
-                        baseKM: arg.baseKM, // Keep original baseKM
+                        km : km, // Actual Distance to destination
+                        fareDistance : RoundKM, // Round of to near 20 for calculation
                         perkmCharge: arg.perkmCharge,
                         perHourCharge: arg.perHourCharge,
                         nightCharge: arg.nightCharge,
                         passanger: arg.passanger,
-                        tollCharge: arg.tollCharge,
-                        basefare: arg.baseFare,
-                        discount : Math.round(arg.baseFare*.5),
+                        tollCharge: "free",
                     });
-                } else if (km <= 40) {
-                    const calculatedFare = (km / arg.baseKM) * arg.baseFare;
-                    fareDetails.push({
-                        fare: Math.round(calculatedFare),
-                        vehicle: arg.vehicle,
-                        imagelink: arg.imagelink,
-                        baseKM: arg.baseKM, // Use original baseKM
-                        calculatedBaseKM: 40, // Add this if you want to store the calculated distance
-                        perkmCharge: arg.perkmCharge,
-                        perHourCharge: arg.perHourCharge,
-                        nightCharge: arg.nightCharge,
-                        passanger: arg.passanger,
-                        tollCharge: arg.tollCharge,
-                        basefare: arg.baseFare,
-                        discount : Math.round(arg.baseFare*.5),
-                    });
-                } else {
-                    const calculatedFare = (km / arg.baseKM) * arg.baseFare;
-                    fareDetails.push({
-                        fare: Math.round(calculatedFare),
-                        vehicle: arg.vehicle,
-                        imagelink: arg.imagelink,
-                        baseKM: arg.baseKM, // Use original baseKM
-                        calculatedBaseKM: km, // Add this if needed for calculated distance
-                        perkmCharge: arg.perkmCharge,
-                        perHourCharge: arg.perHourCharge,
-                        nightCharge: arg.nightCharge,
-                        passanger: arg.passanger,
-                        tollCharge: arg.tollCharge,
-                        basefare: arg.baseFare,
-                        discount : Math.round(arg.baseFare*.7),
-                    });
-                }
+                
             });
             
         }
-            // console.log(tripType);
             
-        if (tripType === "Round Trip") {
+        if (TripType === "Round Trip") {
             FilteredVehicles.forEach((arg) => {
-                if (km <= 20) {
-                    const calculatedKm = km * 2;
-                    const doubleFare = (calculatedKm/arg.baseKM) * arg.baseFare;
-                    const calculatedFare = doubleFare - doubleFare * 0.10; // 10% discount
+                let RoundKM = (Math.ceil(km / 10) * 10)*2;
+                    const fare = ((RoundKM / arg.km) * arg.baseFare);
+                    const discount = Math.round(fare*.15); // 15% Discount on round trip
+                    const fareWithAddedDiscount = fare + discount
+                    const finalFare = fare;
+
                     fareDetails.push({
-                        fare: Math.round( calculatedFare),
+                        fare: Math.round(fareWithAddedDiscount),
+                        discount : Math.round(discount),
+                        finalFare : Math.round(finalFare),
                         vehicle: arg.vehicle,
                         imagelink: arg.imagelink,
-                        baseKM: calculatedKm,
+                        km : km*2, // Actual Distance to destination
+                        fareDistance : RoundKM, // Round of to near 20 for calculation
                         perkmCharge: arg.perkmCharge,
                         perHourCharge: arg.perHourCharge,
                         nightCharge: arg.nightCharge,
                         passanger: arg.passanger,
                         tollCharge: arg.tollCharge,
-                        tollIncluded : arg.tollIncluded,
-                        discount : Math.round(arg.baseFare*.10),
                     });
-                }
-
-                else if (km <= 40) {
-                    const calculatedKm = km * 2;
-                    const doubleFare = (calculatedKm/arg.baseKM)  * arg.baseFare;
-                    const calculatedFare = doubleFare - doubleFare * 0.10; // 10% discount
-                    fareDetails.push({
-                        fare: Math.round( calculatedFare),
-                        vehicle: arg.vehicle,
-                        imagelink: arg.imagelink,
-                        baseKM: calculatedKm,
-                        perkmCharge: arg.perkmCharge,
-                        perHourCharge: arg.perHourCharge,
-                        nightCharge: arg.nightCharge,
-                        passanger: arg.passanger,
-                        tollCharge: arg.tollCharge,
-                        tollIncluded : arg.tollIncluded,
-
-                        discount : Math.round(arg.baseFare*.10),
-                    });
-                }
-                else {
-                    const calculatedKm = km * 2;
-                    const doubleFare = (calculatedKm/arg.baseKM)  * arg.baseFare;
-                    const calculatedFare = doubleFare - doubleFare * 0.10; // 10% discount
-                    fareDetails.push({
-                        fare: Math.round( calculatedFare),
-                        vehicle: arg.vehicle,
-                        imagelink: arg.imagelink,
-                        baseKM: calculatedKm,
-                        perkmCharge: arg.perkmCharge,
-                        perHourCharge: arg.perHourCharge,
-                        nightCharge: arg.nightCharge,
-                        passanger: arg.passanger,
-                        tollCharge: 200,
-                        tollIncluded : 'included',
-
-                        discount : Math.round(arg.baseFare*.10),
-                    });
-                }
             });
         }
 

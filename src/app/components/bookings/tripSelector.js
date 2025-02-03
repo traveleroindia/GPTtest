@@ -5,15 +5,11 @@ import { BookingContext } from "./bookingsMain";
 
 
 export default function TripSelector() {
-
-    const [tripType, setTripType] = useState("One Way")
     const options = ["One Way", "Round Trip", "Rental", "Airport"];
-    const {Trip} = useContext(BookingContext);
-
+    const {TripType, setTripType} = useContext(BookingContext);
 
     function handleClick(arg) {
-        setTripType(arg)
-        Trip(arg)
+            setTripType(arg)
     }
 
 
@@ -30,13 +26,13 @@ export default function TripSelector() {
                     className="absolute bg-[--c1]  h-9 rounded-full transition-all duration-1000 ease-in-out shadow-2xl shadow-[--c1]"
                     style={{
                         width: "25%",
-                        left: `${options.indexOf(tripType) * 25}%`,
+                        left: `${options.indexOf(TripType) * 25}%`,
                     }}
                 ></div>
                 {options.map((e) => (
                     <div className={`p-1 z-10 text-xs md:text-lg text-center w-1/4 transition-all duration-1000 ease-in-out
                         hover:bg-[--c1] hover:text-[--dark] rounded-full
-                        ${tripType === e ? "text-[--light] font-semibold" : ''}`}
+                        ${TripType === e ? "text-[--light] font-semibold" : ''}`}
                         key={e}
                         // onClick={() => {setTripType(e); }}
                         onClick={() => handleClick(e)}

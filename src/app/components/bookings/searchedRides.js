@@ -30,11 +30,12 @@ const returnDate = tripDetails.ReturnPickupDate;
     return null; // Do not render if no details are available
 }
 
+localStorage.setItem('RidesSearched', '');
 
 const CaptureSelectionInfo=(index)=>{
 console.log(BookingFareDetails[index]);
 console.log(tripDetails);
-localStorage.setItem('RidesSearched', 'true');
+localStorage.setItem('RidesSearched', 'Yes');
 localStorage.setItem("BookingData",JSON.stringify({Fare:(BookingFareDetails[index]),Trip:tripDetails}));
 Router.push('/user')
 
@@ -100,7 +101,7 @@ Router.push('/user')
                                       {/* =======================================   Trip Type */}
                                       <td className="pr-2 text-center place-items-center "> <div className="w-full flex justify-center">
                                           <BiTrip className="mb-1 w-9 h-9 p-1  text-green-600  block " /> </div>
-                                          <span className=" px-2 py-1 bg-green-300 text-green-800 rounded-full text-xs font-semibold ">{tripDetails.tripType}</span></td>
+                                          <span className=" px-2 py-1 bg-green-300 text-green-800 rounded-full text-xs font-semibold ">{tripDetails.Booking}</span></td>
 
                                       {/* =======================================   Trip Date */}
                                       <td className="pr-2 place-items-center text-center"> <div className="w-full flex justify-center">

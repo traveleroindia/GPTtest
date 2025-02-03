@@ -10,7 +10,7 @@ import TripCalculator from '../bookings/tripCalculator';
 export const BookingContext = createContext();
 
 export default function BookingsMain() {
-    const [tripType, setTripType] = useState("One Way");
+    const [TripType, setTripType] = useState("One Way");
     const [OriginInformation, setOriginInformation] = useState({ lat: 0, lng: 0, address: '' });
     const [Destinationformation, setDestinationformation] = useState({ lat: 0, lng: 0, address: '' });
     const [Distance, setDistance] = useState(null);
@@ -22,10 +22,10 @@ export default function BookingsMain() {
     const [RideTypeOption, setRideTypeOption] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [detailsofBokkingandfare, setDetailsofBokkingandfare] = useState(false);
-
+    const [Booking, setBooking] = useState();
     const [tripDetails, setTripDetails] = useState({});
 
-        
+
     
     //========================================================== Origin info
 
@@ -56,52 +56,61 @@ export default function BookingsMain() {
     };
     
     //============================================================= Update distance and call function
-    const DistanceandTime = (distance, time) => {
+
+    const DistanceandTime = (distance, time) => {                            // Function is called from DistanceAPICall
+        console.log("Distance and Time:", distance, time);
         setDistance(Math.ceil(parseFloat(distance))); // Corrected variable name and parentheses
         setTime(time); // This remains the same
     };
     
 
     //============================================================================ Get fare details
-    const getFareDetails = (fareDetails) => {
 
+    const getFareDetails = (fareDetails) => {                                // funcion called from Trip calculator
+ 
         setBookingFareDetails(fareDetails); // Update state
     };
-
     const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${OriginInformation.lat},${OriginInformation.lng}&destination=${Destinationformation.lat},${Destinationformation.lng}&travelmode=driving`;
 
-    // useEffect(() => {
-    //     if (OriginInformation.lat === 0 || Destinationformation.lat === 0) {
-    //         return;
-    //     }
-    //     console.log("Origin:", OriginInformation);
-    //     console.log("Destination:", Destinationformation);
-    // }, [OriginInformation, Destinationformation]);
+ 
 // =============================================================================== OnSUbmit set all states from all otehrcomponents into one
+useEffect(() => {
+    let newBooking;
+    if (TripType === "Airport") {
+        newBooking =RideTypeOption;
+    } else {
+        newBooking = TripType;
+    }
+    setBooking(newBooking);
+}, [RideTypeOption, TripType]);
+
+// =============================================================================== Set all states from all otehr components into one
+
 useEffect(() => {
     setTripDetails({
         OriginInformation,
         Destinationformation,
         googleMapsUrl,
-        tripType,
+        Booking,
         Time,
         TripDate: TripDate ? TripDate.toLocaleDateString() : null,
         pickupTime,
         ReturnPickupDate: ReturnPickupDate ? ReturnPickupDate.toLocaleDateString() : null,
-        RideTypeOption,
     });
-}, [OriginInformation, Destinationformation, googleMapsUrl, tripType, Time, Distance, TripDate, pickupTime, ReturnPickupDate, RideTypeOption]);
+}, [OriginInformation, Destinationformation, googleMapsUrl, TripType, Time, Distance, TripDate, pickupTime, ReturnPickupDate, RideTypeOption]);
 
 
+// =============================================================================== OnSUbmit set all states from all otehr components into one
 
 
-const HandleSearchedRides = () => {
+const HandleSearchedRides = () => {   // Function called from bookingForm component
     // Validate inputs
+
     if (!tripDetails.OriginInformation || tripDetails.OriginInformation.lat === 0) {
         setErrorMessage('Fill Origin Address');
         return;
     }
-    if (tripDetails.tripType !== "Rental" && (!tripDetails.Destinationformation || tripDetails.Destinationformation.lat === 0)) {
+    if (tripDetails.TripType !== "Rental" && (!tripDetails.Destinationformation || tripDetails.Destinationformation.lat === 0)) {
         setErrorMessage('Fill Destination Address');
         return;
     }
@@ -113,7 +122,7 @@ const HandleSearchedRides = () => {
         setErrorMessage('Choose your Pickup Time');
         return;
     }
-    if (tripDetails.tripType === "Round Trip" && !tripDetails.ReturnPickupDate) {
+    if (tripDetails.TripType === "Round Trip" && !tripDetails.ReturnPickupDate) {
         setErrorMessage('Choose your Return Date');
         return;
     }
@@ -132,8 +141,9 @@ const HandleSearchedRides = () => {
     return (
         <BookingContext.Provider
             value={{
-                Trip: setTripType,
-                TripType: tripType,
+                setTripType,
+                Booking,
+                TripType,
                 GetOriginInfo,
                 GetDestinationInfo,
                 OriginLat: OriginInformation.lat,

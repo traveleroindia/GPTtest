@@ -1,0 +1,38 @@
+To create a booking on postman
+
+{
+  "userDetails": {
+    "name": "Neha Sharma",
+    "email": "Neha@GMail.com",
+    "phone": "9560632973",
+    "password": "nehandy"
+  },
+  "bookingDetails": {
+    "origin_lat": 37.7749,
+    "origin_lng": -122.4194,
+    "origin_address": "68 dharam colont gurgaon",
+    "destination_lat": 34.0522,
+    "destination_lng": -118.2437,
+    "destination_address": "401 shatripuram agra",
+    "google_maps_url": "https://www.google.com/maps/dir/?api=1&destination=34.0522,-118.2437",
+    "booking_type": "Two-way",
+    "time_duration": "5 hours",
+    "trip_date": "2023-10-31",
+    "pickup_time": "10:00",
+    "return_pickup_date": "2023-10-31"  
+  },
+  "fareDetails": {
+    "fare": 200.00,
+    "discount": 20.00,
+    "finalFare": 180.00,
+    "vehicle": "Sedan",
+    "imagelink": "https://example.com/images/vehicle.jpg",
+    "km": 100,
+    "fareDistance": 80, // Assuming this is the distance for fare calculation
+    "perkmCharge": 2.00,
+    "perHourCharge": 20.00,
+    "nightCharge": 15.00,
+    "passenger": 1,
+    "tollCharge": 5.00
+  }
+}

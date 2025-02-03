@@ -18,7 +18,6 @@ export default function BookingForm(props) {
     setPickupTime,
     setReturnPickupDate,
     setRideTypeOption,
-    ReturnPickupDate,
     errorMessage, setErrorMessage,setDetailsofBokkingandfare,detailsofBokkingandfare
   } = useContext(BookingContext);
 
@@ -94,6 +93,8 @@ returnDateRef.current.value= '';
       setAirportFrom("From Airport");
       setAirportTo("To");
       setRideTypeOption("Airport Pickup");
+      console.log(TripType);
+      
     } else {
       setAirportFrom("From");
       setAirportTo("To Airport");
