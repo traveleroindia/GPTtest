@@ -171,7 +171,7 @@ const HandleSearchedRides = () => {   // Function called from bookingForm compon
             <SearchedRides />
             <DirectionMapPopup />
             <TripCalculator />
-            {/* <Testing/> */}
+            <Testing/>
         </BookingContext.Provider>
     );
 }

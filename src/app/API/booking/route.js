@@ -25,17 +25,30 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Invalid fareDetails' }, { status: 400 });
     }
 
-    // ==================================================================================== Checking if User Exists
+    // ==================================================================================== Checking if User Email Exists
 
-    const existsSql = 'SELECT COUNT(*) AS count FROM user WHERE email = ? OR phone = ?';
-    const existsParams = [userDetails.email, userDetails.phone];
+    const emailexistsSql = 'SELECT COUNT(*) AS count FROM user WHERE email = ? ';
+    const emailParams = [userDetails.email];
 
-    const [exists] = await db.query(existsSql, existsParams);
+    const [emailexists] = await db.query(emailexistsSql, emailParams);
 
     // If the user already exists, return an error
-    if (exists[0].count > 0) {
-      return NextResponse.json({ error: 'Email or phone number is already taken! Try Login' }, { status: 409 });
+    if (emailexists[0].count > 0) {
+      return NextResponse.json({ error: 'Email Address already exists! Try Login or use a diffrent Email' }, { status: 409 });
     }
+
+
+     // ==================================================================================== Checking if User Phone Exists
+
+     const phoneexistsSql = 'SELECT COUNT(*) AS count FROM user WHERE phone = ?';
+     const phoneexistsParams = [ userDetails.phone];
+ 
+     const [phoneexists] = await db.query(phoneexistsSql, phoneexistsParams);
+ 
+     // If the user already phoneexists, return an error
+     if (phoneexists[0].count > 0) {
+       return NextResponse.json({ error: 'This phone number is exists! Try Login or use a diffrent Phone number' }, { status: 409 });
+     }
 
     // ==================================================================================== Adding User Details
 
