@@ -29,19 +29,40 @@ export async function POST(req) {
     // Parse the request body to get the user data
     const body = await req.json(); // Assuming body contains user data as JSON
 
-    // Prepare the SQL statements for checking if email or phone is already taken
-    const existsSql = 'SELECT COUNT(*) FROM user WHERE email = ? OR phone = ?';
-    const existsParams = [body.email, body.phone];
+
+
+
+
+    // ================================================== Prepare the SQL statements for checking if email is already taken
+    const existsEmail = 'SELECT COUNT(*) FROM user WHERE email = ?';
+    const existsEmailParams = [body.email];
 
     // Execute the exists query
-    const [exists] = await db.query(existsSql, existsParams);
+    const [Emailexists] = await db.query(existsEmail, existsEmailParams);
+
 
     // If the user already exists, return an error
-    if (exists[0]['COUNT(*)'] > 0) {
-      return NextResponse.json({ error: 'Email or phone number is already taken' }, { status: 409 });
+    if (Emailexists[0]['COUNT(*)'] > 0) {
+      return NextResponse.json({ error: 'Email is already taken' }, { status: 409 });
     }
 
-    // Prepare the SQL statement for inserting a new user
+
+
+    // ==================================================    Prepare the SQL statements for checking if  phone is already taken
+    const existsPhone = 'SELECT COUNT(*) FROM user WHERE phone = ?';
+    const existsPhoneParams = [body.phone];
+
+    // Execute the exists query
+    const [Phoneexists] = await db.query(existsPhone, existsPhoneParams);
+
+
+    // If the user already exists, return an error
+    if (Phoneexists[0]['COUNT(*)'] > 0) {
+      return NextResponse.json({ error: 'phone number is already taken' }, { status: 409 });
+    }
+
+   
+   // ==================================================         Prepare the SQL statement for inserting a new user
     const query = 'INSERT INTO user (name, email, phone, password) VALUES (?, ?, ?, ?)';
 
     const hashedPassword = await bcrypt.hash(body.password, saltRound);
@@ -55,7 +76,7 @@ export async function POST(req) {
       userId: result.insertId,
       email: body.email,
       name: body.name,
-      phone : body.phone,
+      phone: body.phone,
     };
 
     // Generate a JWT token for the user
@@ -66,13 +87,13 @@ export async function POST(req) {
       httpOnly: false,
       // secure: process.env.NODE_ENV === 'production', // Use Secure attribute in production
       // maxAge: 60 * 60 * 24, // 1 day
-      maxAge:60 * 3, // 3 minute
+      maxAge: 60 * 3, // 3 minute
       sameSite: 'strict',
       path: '/'
     });
 
     // Create response object and set cookie header
-    const response = NextResponse.json({ message: 'User added successfully', user:userInfo, token }, { status: 201 });
+    const response = NextResponse.json({ message: 'User added successfully', user: userInfo, token }, { status: 201 });
     response.headers.set('Set-Cookie', serialised); // Set the JWT token cookie in the response
 
     return response;

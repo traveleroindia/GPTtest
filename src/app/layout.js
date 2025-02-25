@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic';
 import "./globals.css";
 import {Providers} from './provider'
+import {UserProvider} from './components/providers/userProvider'
 // import Navbar from "./components/navbar/navbar";
 const Navbar = dynamic(() => import('./components/navbar/navbar'), { ssr: true });
 
@@ -24,8 +25,12 @@ export default function RootLayout({ children }) {
       </head>
        <body   >
         <Providers>
+          <UserProvider>
+
         <Navbar />
         {children}
+        </UserProvider>
+
         </Providers>
       </body>
     </html>
