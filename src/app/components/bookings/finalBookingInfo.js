@@ -19,7 +19,7 @@ const FinalBookingInfo = () => {
     const router = useRouter();
     const [Fare, setFare] = useState({});
     const [Trip, setTrip] = useState({});
-    console.log(Trip,Fare);
+    // console.log(Trip,Fare);
 
    const goBAcktoHomepage=()=>{
     router.push('/'); // Navigate to the homepage

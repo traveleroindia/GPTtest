@@ -61,7 +61,7 @@ export async function POST(req) {
         // Set cookie with user ID
         const user = userDetails[0]
         const userInfo ={
-            id : user.id,
+            userId : user.id,
             name : user.name,
             email : user.email,
             phone : user.phone,
@@ -75,7 +75,7 @@ export async function POST(req) {
         httpOnly: false,
         // secure: process.env.NODE_ENV === 'production', // Use Secure attribute in production
         // maxAge: 60 * 60 * 24, // 1 day
-        maxAge: 60 * 3, // 3 minute
+        maxAge: 60 * 60 * 1, // 1 hr
         sameSite: 'strict',
         path: '/'
         });
