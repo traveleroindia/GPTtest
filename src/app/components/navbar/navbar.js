@@ -87,7 +87,7 @@ const Navbar = () => {
                                 <Link href="/user" className="px-4 py-2 rounded ml-4 bg-[--c1] w-36 text-white hover:transform-sc">
                                     Login
                                 </Link>
-                                <Link href="/signup" className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black">
+                                <Link href="/user" className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black">
                                     Signup
                                 </Link>
                             </>

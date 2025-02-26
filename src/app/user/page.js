@@ -3,7 +3,7 @@ import LoggedInUser from './loggedInUser';
 import React, { useState, useEffect } from 'react';
 import FinalBookingInfo from '../components/bookings/finalBookingInfo';
 import { useAuth } from '../components/providers/userProvider';
-
+import SubmitBooking from './submitBooking'
 
 const UserRegistration = () => {
     const { userDetails } = useAuth();;
@@ -80,12 +80,12 @@ const UserRegistration = () => {
         <div>
             <section className="bg-white dark:bg-gray-900">
                 <div className="container px-6 py-12 mx-auto">
-                    <div className="lg:flex lg:items-center lg:-mx-6">
+                    <div className="lg:flex lg:items-center justify-center lg:-mx-6">
                         <div className="lg:w-1/2 lg:mx-6">
                             <div className="mt-6 space-y-8 md:mt-8">
                                 {/* Info Section */}
                                 {formFilled === 'Yes' ? (
-                                    <div className='p-14'>
+                                    <div className='p-4'>
                                         <h1 className="text-2xl font-semibold text-gray-800 capitalize dark:text-white lg:text-3xl mb-5">
                                             Your Ride Informations
                                         </h1>
@@ -212,7 +212,7 @@ const UserRegistration = () => {
                                             className="w-full px-6 py-3 mt-6 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[--c1] rounded-md hover:bg-green-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                                             disabled={loading}
                                         >
-                                            {loading ? 'Loading...' : (isNewUser ? 'Register & Book' : 'Log In & Book')}
+                                            {loading ? 'Loading...' : (isNewUser ? 'Register' : 'Log-In')}
                                         </button>
 
                                         {error && <p className="mt-4 text-red-500">{error}
@@ -233,6 +233,7 @@ const UserRegistration = () => {
 
                         {/* <Testing/> */}
                     </div>
+                    <SubmitBooking/>
                 </div>
             </section>
         </div>

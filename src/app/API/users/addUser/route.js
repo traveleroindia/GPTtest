@@ -30,9 +30,6 @@ export async function POST(req) {
     const body = await req.json(); // Assuming body contains user data as JSON
 
 
-
-
-
     // ================================================== Prepare the SQL statements for checking if email is already taken
     const existsEmail = 'SELECT COUNT(*) FROM user WHERE email = ?';
     const existsEmailParams = [body.email];
