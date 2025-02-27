@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import LOGO from '../../../../public/images/LOGO.png';
-import {useAuth } from '../providers/userProvider';
+import { useAuth } from '../providers/userProvider';
 import dynamic from 'next/dynamic';
 import { useCookies } from 'react-cookie';
 
@@ -22,27 +22,26 @@ const Navbar = () => {
     const currentTheme = resolvedTheme || 'light';
     const pathname = usePathname();
     const [mounted, setMounted] = useState(false);
-    const prevUserDetails = useRef(null); // Store previous state without re-rendering
-
- const {userDetails} = useAuth();;
+    const prevUserDetails = useRef(null);
+    
+    const { userDetails } = useAuth();
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    
     // Set mounted to true after component mounts
     useEffect(() => {
         setMounted(true);
     }, []);
-
-
-    const [cookies, setCookie, removeCookie] = useCookies(['user']); // Correct destructuring
+    
     const logOut = () => {
         removeCookie('user', { path: '/' });
         alert('User logged out successfully!');
     };
+    
+    // Return null until component is mounted to avoid hydration issues
+    if (!mounted) return null;
 
-
-
-
-    // Return null until component is mounted to avoid hydration issues, but still render the structure
     return (
-        <nav className={`lg:px-20 md:px-5 py-2 md:py-1 lg:shadow-lg shadow-lg sticky top-0 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90 z-50 ${!mounted ? 'hidden' : ''}`}>
+        <nav className={`lg:px-20 md:px-5 py-2 md:py-1 lg:shadow-lg shadow-lg sticky top-0 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90 z-50`}>
             <div className="flex justify-between items-center">
                 <div className="text-2xl font-bold w-60 max-w-full px-4 xl:mr-12">
                     <Image src={LOGO} className="w-[150px]" alt="logo" />
@@ -74,14 +73,15 @@ const Navbar = () => {
                         >
                             {currentTheme === 'light' ? <BsFillCloudMoonFill /> : <BsCloudSunFill />}
                         </button>
-
+                        
                         {/* Show user details if available */}
                         {userDetails ? (
-                            <><p className="px-4 py-2  text-xs">Hello <span className='font-bold capitalize text-xl'>{userDetails.name}</span> </p>
-                            < button className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black dark:hover:bg-[--c1] hover:bg-[--c1] transform-scalar" 
-                            onClick={logOut}>
-                                Logout
-                            </button></>
+                            <>
+                                <p className="px-4 py-2 text-xs">Hello <span className='font-bold capitalize text-xl'>{userDetails.name}</span></p>
+                                <button className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black dark:hover:bg-[--c1] hover:bg-[--c1] transform-scalar" onClick={logOut}>
+                                    Logout
+                                </button>
+                            </>
                         ) : (
                             <>
                                 <Link href="/user" className="px-4 py-2 rounded ml-4 bg-[--c1] w-36 text-white hover:transform-sc">

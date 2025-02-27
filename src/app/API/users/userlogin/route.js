@@ -65,6 +65,7 @@ export async function POST(req) {
             name : user.name,
             email : user.email,
             phone : user.phone,
+            alt_phone : user.alt_phone,
         } 
 
         

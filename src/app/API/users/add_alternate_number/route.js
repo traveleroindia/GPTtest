@@ -5,7 +5,7 @@ export async function POST(req) {
     try {
         const db = await connectDB();
         const body = await req.json();
-        console.log(body);
+        // console.log(body);
         
         // Ensure body has the required fields
         if (!body.alt_phone || !body.id) {

@@ -48,12 +48,12 @@ export default function BookingsMain() {
         setDestinationformation((prevState) => ({ ...prevState, ...newData }));
     };
 
-      //============================================================= Set & Update trip time ,date,return date
-      const TripDateTimeReturnSet = (tripDate,PickupTime,ReturnDate) => {
-        setTripDate (tripDate);
-        setPickupTime (PickupTime);
-        setReturnPickupDate (ReturnDate);
-    };
+    //   //============================================================= Set & Update trip time ,date,return date
+    //   const TripDateTimeReturnSet = (tripDate,PickupTime,ReturnDate) => {
+    //     setTripDate (tripDate);
+    //     setPickupTime (PickupTime);
+    //     setReturnPickupDate (ReturnDate);
+    // };
     
     //============================================================= Update distance and call function
 

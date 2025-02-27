@@ -35,6 +35,9 @@ export default function BookingForm(props) {
         setErrorMessage("Trip date cannot be in the past.")
       } else {
         setTripDate(tripDate);
+        console.log(tripDateRef.current.value);
+        
+        localStorage.setItem('TripDate',tripDateRef.current.value)
         setErrorMessage(null)
 
       }
@@ -48,6 +51,7 @@ export default function BookingForm(props) {
         setErrorMessage("Return date cannot be before the trip date.")
       } else {
         setReturnPickupDate(returnDate);
+        localStorage.setItem('ReturnPickup',returnDateRef.current.value)
         setErrorMessage(null)
       }
     }
