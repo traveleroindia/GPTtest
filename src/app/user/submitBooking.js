@@ -71,8 +71,8 @@ const PostBooking = async () => {
 
         if (response.status === 201) {
             setBookingConfirm('Your Booking has been created. You will receive a confirmation email from us on your registered E-mail Address.');
-            // localStorage.clear('BookingData');
-            // localStorage.clear("RidesSearched");
+            localStorage.clear('BookingData');
+            localStorage.clear("RidesSearched");
         }
         
         return await response.json(); // Await the JSON parsing for successful response

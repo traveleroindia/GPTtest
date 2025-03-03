@@ -51,7 +51,7 @@ const Navbar = () => {
                         {isOpen ? '✖' : '☰'}
                     </button>
                 </div>
-                <div className={`fixed z-50 top-0 left-0 w-3/4 h-full shadow-lg transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-none bg-[--light] dark:bg-[--dark] py-2 lg:bg-transparent lg:dark:bg-transparent`}>
+                <div className={`fixed bg-[--background] pl-2 pt-4 dark:bg-[--dark] border border-r-[--c1] h-[100vh] lg:h-full lg:border-none z-50 top-0 left-0 w-3/4 shadow-lg transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-none bg-[--light] dark:bg-[--dark] py-2 lg:bg-transparent lg:dark:bg-transparent`}>
                     <div className="lg:hidden flex items-center flex-col max-w-48 mb-8">
                         <Image src={LOGO} priority="low" alt="logo" />
                     </div>
@@ -84,10 +84,10 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Link href="/user" className="px-4 py-2 rounded ml-4 bg-[--c1] w-36 text-white hover:transform-sc">
+                                <Link href="/user" className="px-4 py-2 rounded ml-4 bg-[--c1] w-36 text-white hover:transform-sc "  onClick={() => setIsOpen(false)}>
                                     Login
                                 </Link>
-                                <Link href="/user" className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black">
+                                <Link href="/user" className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black"  onClick={() => setIsOpen(false)}>
                                     Signup
                                 </Link>
                             </>

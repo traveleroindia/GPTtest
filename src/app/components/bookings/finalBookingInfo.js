@@ -47,7 +47,7 @@ const FinalBookingInfo = () => {
         }
      }   
    
-}, []);
+}, [localStorage.getItem('RidesSearched')]);
 
 
     return (
