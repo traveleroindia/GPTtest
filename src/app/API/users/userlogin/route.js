@@ -66,6 +66,7 @@ export async function POST(req) {
             email : user.email,
             phone : user.phone,
             alt_phone : user.alt_phone,
+            created_at : user.created_at,
         } 
 
         

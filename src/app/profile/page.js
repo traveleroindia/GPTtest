@@ -21,12 +21,19 @@ import { IoCloseCircle } from "react-icons/io5";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { useState,useRef } from 'react';
 
+import { useAuth } from '../components/providers/userProvider';
+
+
 const dateClass = ' flex items-center gap-2 bg-blue-200 px-4 py-2 rounded-full mr-4 font-semibold text-gray-800  text-md shadow-xl w-fit'
 
 const Page = () => {
+    const [show,setShow]=useState(false);    
+    const ref = useRef();  
 
-  const ref = useRef();  
-const [show,setShow]=useState(false);    
+   let { userDetails } = useAuth();
+   console.log(userDetails);
+        
+
    
 const menuref = useOnclickOutside(()=>{
     setShow(false)
@@ -35,21 +42,19 @@ const menuref = useOnclickOutside(()=>{
 })
 
 
-
-
     return (
         <div className='w-full dark:bg-[--dark] flex items-start justify-center flex-col md:flex-row   '>
             {/* =========================================================== Profile Sidebar */}
             <div className=' md:w-1/3 md:h-[90vh]  border-r border-gray-600'>
                 <div> <img src="https://random-image-pepebigotes.vercel.app/api/random-image" alt="" /> </div>
-                <h2 className='text-4xl font-bold uppercase  text-center pt-4'>Nitesh Kumar</h2>
-                <div className='flex justify-center gap-10 py-3 text-xl border-b  border-gray-600 '><span className='flex justify-start w-max items-center'><FaUser className='mr-2  ' />User ID : </span><p>89</p></div>
+                <h2 className='text-4xl font-bold uppercase  text-center pt-4'>{userDetails.name}</h2>
+                <div className='flex justify-center gap-10 py-3 text-xl border-b  border-gray-600 '><span className='flex justify-start w-max items-center'><FaUser className='mr-2  ' />User ID : </span><p>{userDetails.userId}</p></div>
 
                 <div className='px-4 py-10 text-base border-b  border-gray-600'>
-                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><MdEmail className='mr-2 ' />Email : </span><p className=' whitespace-nowrap'>niteshkumar rajotia@gmail.com</p></div>
-                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><BsFillPhoneFill className='mr-2 ' />Phone : </span><p>+91-982342543</p></div>
-                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><BsCalendarDateFill className='mr-2 ' />Member Since : </span><p>26/04/2024</p></div>
-                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><IoPhonePortrait className='mr-2 ' />Alternate Number : </span><p>984314522</p></div>
+                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><MdEmail className='mr-2 ' />Email : </span><p className=' whitespace-nowrap'>{userDetails.email}</p></div>
+                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><BsFillPhoneFill className='mr-2 ' />Phone : </span><p>{userDetails.phone}</p></div>
+                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><BsCalendarDateFill className='mr-2 ' />Member Since : </span><p>20/01/2024</p></div>
+                    <div className='flex justify-between gap-10 pt-3 '><span className='flex justify-start w-max items-center'><IoPhonePortrait className='mr-2 ' />Alternate Number : </span><p>{userDetails.alt_phone}</p></div>
 
                 </div>
             </div>
@@ -105,7 +110,8 @@ const menuref = useOnclickOutside(()=>{
             </div>
 
         </div>
-    );
-}
+    )
+};
+
 
 export default Page;

@@ -6,7 +6,7 @@ import { useAuth } from '../components/providers/userProvider';
 import SubmitBooking from './submitBooking'
 
 const UserRegistration = () => {
-    const { userDetails } = useAuth();;
+    const { userDetails } = useAuth();
 
     const [isNewUser, setIsNewUser] = useState(true);
     const [formData, setFormData] = useState({

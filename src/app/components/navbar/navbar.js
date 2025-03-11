@@ -9,12 +9,12 @@ import LOGO from '../../../../public/images/LOGO.png';
 import { useAuth } from '../providers/userProvider';
 import dynamic from 'next/dynamic';
 import { useCookies } from 'react-cookie';
-
 const navLinks = [
     { id: 1, title: 'Home', href: '/' },
     { id: 2, title: 'About', href: '/about' },
     { id: 3, title: 'Contact', href: '/contact' },
 ];
+import useOnclickOutside from "react-cool-onclickoutside";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,16 @@ const Navbar = () => {
     
     const { userDetails } = useAuth();
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
-    
+
+    const ref = useRef();
+
+    const mobileMenu = useOnclickOutside(()=>{
+        setIsOpen(false)
+        console.log("Function fired");
+        
+    });
+
+
     // Set mounted to true after component mounts
     useEffect(() => {
         setMounted(true);
@@ -51,7 +60,7 @@ const Navbar = () => {
                         {isOpen ? '✖' : '☰'}
                     </button>
                 </div>
-                <div className={`fixed bg-[--background] pl-2 pt-4 dark:bg-[--dark] border border-r-[--c1] h-[100vh] lg:h-full lg:border-none z-50 top-0 left-0 w-3/4 shadow-lg transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-none bg-[--light] dark:bg-[--dark] py-2 lg:bg-transparent lg:dark:bg-transparent`}>
+                <div ref={mobileMenu} className={`fixed bg-[--background] pl-2 pt-4 dark:bg-[--dark] border border-r-[--c1] h-[100vh] lg:h-full lg:border-none z-50 top-0 left-0 w-3/4 shadow-lg transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-none bg-[--light] dark:bg-[--dark] py-2 lg:bg-transparent lg:dark:bg-transparent`}>
                     <div className="lg:hidden flex items-center flex-col max-w-48 mb-8">
                         <Image src={LOGO} priority="low" alt="logo" />
                     </div>
@@ -77,7 +86,7 @@ const Navbar = () => {
                         {/* Show user details if available */}
                         {userDetails ? (
                             <>
-                                <p className="px-4 py-2 text-xs">Hello <span className='font-bold capitalize text-xl'>{userDetails.name}</span></p>
+                                <p className="px-4 py-2 text-xs">Hello <Link className='font-bold capitalize text-xl'href="/profile">{userDetails.name}</Link></p>
                                 <button className="px-4 py-2 rounded ml-4 bg-gray-800 w-36 text-white dark:bg-[--light] dark:text-black dark:hover:bg-[--c1] hover:bg-[--c1] transform-scalar" onClick={logOut}>
                                     Logout
                                 </button>
