@@ -15,3 +15,5 @@ async function fetchProtectedData() {
       console.error('Error fetching protected data:', error);
     }
   }
+
+  

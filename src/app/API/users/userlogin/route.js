@@ -12,6 +12,8 @@ const jwtGenerate = (user) => {
 };
 export async function POST(req) {   
     try {
+
+        
         const db = await connectDB(); // Connect to the database
 
         // Parse the request body to get the user data
@@ -23,7 +25,8 @@ export async function POST(req) {
         if (!email || !password) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 400 });
         }
-
+        console.log(body);
+        
         // ============================= Query to find the user by email or phone =============================
         const userSql = 'SELECT password FROM user WHERE email = ? OR phone = ?';
         const userParams = [email, email]; // if both email and phone are the same type of identifier
@@ -57,7 +60,6 @@ export async function POST(req) {
         
         // Return a success response with user details but exclude the password
         const { password: hashedPassword, ...userDetailsWithoutPassword } = userDetails[0];
-
         // Set cookie with user ID
         const user = userDetails[0]
         const userInfo ={
@@ -66,7 +68,7 @@ export async function POST(req) {
             email : user.email,
             phone : user.phone,
             alt_phone : user.alt_phone,
-            created_at : user.created_at,
+            created_at: new Date(user.created_at).toLocaleDateString('en-US'), // Formats depending on locale
         } 
 
         

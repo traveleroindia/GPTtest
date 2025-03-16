@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
-import vehiclefare from "/vehiclefare.json";
+import vehiclefare from "../../../../public/vehiclefare.json"; 
 import { BookingContext } from "./bookingsMain";
+
 
 export default function TripCalculator() {
     const { Distance, getFareDetails,  TripType } = useContext(BookingContext);
