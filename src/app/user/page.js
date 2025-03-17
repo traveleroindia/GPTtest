@@ -92,7 +92,7 @@ const UserRegistration = () => {
                                         <FinalBookingInfo />
                                     </div>
                                 ) : (
-                                    <img src="images/login.png" alt="Login" width={400} height={400} />
+                                    <img src="images/login.png" className='hidden xl:block' alt="Login" width={400} height={400} />
                                 )}
                             </div>
                         </div>

@@ -29,36 +29,40 @@ export async function GET(req) {
         const db = await connectDB();
         
         // SQL query to fetch user bookings
-        const query = `SELECT 
-        b.id as bookingID,
-        DATE(b.created_at) AS BookingDate,
-            b.origin_lat,
-            b.origin_lng,
-            b.origin_address,
-            b.destination_lat,
-            b.destination_lng,
-            b.destination_address,
-            b.google_maps_url,
-            b.booking_type,
-            b.time_duration,
-            b.trip_date,
-            b.pickup_time,
-            b.return_pickup_date,
-            fd.fare, 
-            fd.discount, 
-            fd.finalFare,
-            fd.vehicle, 
-            fd.imagelink, 
-            fd.km, 
-            fd.fareDistance,
-            fd.perkmCharge,
-            fd.perHourCharge, 
-            fd.nightCharge,
-            fd.passenger, 
-            fd.tollCharge 
-          FROM bookings b 
-          JOIN faredetails fd ON b.id = fd.booking_id 
-          WHERE b.user_id = ?`;
+        const query = `SELECT DISTINCT 
+    b.id as bookingID,
+    DATE_FORMAT(b.created_at, '%d-%m-20%y') AS BookingDate,
+    b.origin_lat,
+    b.origin_lng,
+    b.origin_address,
+    b.destination_lat,
+    b.destination_lng,
+    b.destination_address,
+    b.google_maps_url,
+    b.booking_type,
+    b.time_duration,
+    DATE_FORMAT(b.trip_date,'%d-%m-20%y') as trip_date,
+    b.pickup_time,
+    DATE_FORMAT(b.return_pickup_date, '%d-%m-20%y') AS return_pickup_date,
+    fd.fare, 
+    fd.discount, 
+    fd.finalFare,
+    fd.vehicle, 
+    fd.imagelink, 
+    fd.km, 
+    fd.fareDistance,
+    fd.perkmCharge,
+    fd.perHourCharge, 
+    fd.nightCharge,
+    fd.passenger, 
+    fd.tollCharge,
+    sm.status as status
+FROM bookings b 
+JOIN faredetails fd ON b.id = fd.booking_id 
+LEFT JOIN status_master sm ON sm.id = b.status 
+WHERE b.user_id = ? 
+ORDER BY b.created_at DESC;
+`;
 
         // Query the database for bookings
         const bookings = await db.query(query, [userId]);

@@ -7,7 +7,7 @@ export default function TripCalculator() {
     const { Distance, getFareDetails,  TripType } = useContext(BookingContext);
     
     // const distanceNumber = Math.ceil(parseFloat(Distance) || 0);
-    const AvailableVehicles = [1, 2, 6];
+    const AvailableVehicles = [1, 2,5, 6];
 
    
     

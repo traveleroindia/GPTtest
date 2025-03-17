@@ -23,22 +23,23 @@ import { useState, useRef, useEffect } from 'react';
 import { ImSpinner } from "react-icons/im";
 import { useAuth } from '../components/providers/userProvider';
 import { useRouter } from 'next/navigation';
+import { MdDirectionsCar } from "react-icons/md";
 import useFetchBookings from './fetchBookings';
 
 
-const dateClass = ' flex items-center gap-2 bg-blue-200 px-4 py-2 rounded-full mr-4 font-semibold text-gray-800  text-md shadow-xl w-fit'
+const dateClass = ' flex items-center gap-2  px-4 py-2 rounded-full mr-4 font-semibold text-gray-800  text-md shadow-xl w-fit'
 
 const Page = () => {
 
     const {bookings, user,loading, error} = useFetchBookings();
-    console.log(bookings);
+    // console.log(bookings);
 
     const router = useRouter();
     const [show, setShow] = useState(false);
     const ref = useRef();
 
     let { userDetails } = useAuth();
-    // console.log(userDetails);
+    console.log(bookings);
 
 
 
@@ -47,13 +48,13 @@ const Page = () => {
         console.log(show);
 
     })
-
+    
     useEffect(() => {
-        // Redirect if userDetails is null
-        if (!userDetails) {
-            router.push('/user'); // Redirect to the login page
+        if(userDetails === null){
+            router.push('/user'); // Redirect to the user page if the cookie is not present
+
         }
-    }, [userDetails, router]); // Dependency array ensures this runs when userDetails changes
+    }, [userDetails]); // Run this effect on component mount only
 
     // Show loading spinner while checking userDetails
     if (loading === true) {
@@ -66,7 +67,7 @@ const Page = () => {
     return (
         <div className='w-full dark:bg-[--dark] flex items-start justify-center flex-col xl:flex-row   '>
             {/* =========================================================== Profile Sidebar */}
-            <div className=' xl:w-1/3 xl:h-[90vh]  border-r border-gray-600'>
+            <div className=' xl:w-1/3 xl:h-[90vh]  '>
                 <div> <img src="https://random-image-pepebigotes.vercel.app/api/random-image" alt="" /> </div>
                 <h2 className='text-4xl font-bold uppercase  text-center pt-4'>{user.name}</h2>
                 <div className='flex justify-center gap-10 py-3 text-xl border-b  border-gray-600 '><span className='flex justify-start w-max items-center'><FaUser className='mr-2  ' />User ID : </span><p>{user.userId}</p></div>
@@ -81,26 +82,31 @@ const Page = () => {
             </div>
 
             {/* =========================================================== Booking Details */}
-            <div className='w-full flex-col flex align-top justify-start  antialiased  '>
+            <div className='w-full flex-col flex align-top justify-start  antialiased '>
                 <h2 className='text-2xl xl:py-10 border-b border-gray-600 p-5 ' >Your Bookings</h2>
                
                {bookings.map((booking,index) => (
                 <div key={index}>
                
-              
-
-               
                 <div className='flex flex-col border-b border-gray-600'>
                     <div className=' my-6 flex items-center xl:flex-row flex-col '>
                         <img width={300} src={booking.imagelink} alt="booked vehicle" />
                         {/* ==============================  Trip Date Time */}
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-full px-7">
                             <div className='flex flex-col relative'>
-                                <p className='font-bold text-xl flex xl:flex-row  relative flex-col items-center gap-3'>Booking Date : {booking.BookingDate} <span className={`text-xs bg-teal-200 ${dateClass}`}> Booking ID : {booking.bookingID}</span> <span className={`text-xs bg-amber-200 ${dateClass}`}>{booking.booking_type} Trip</span>
-                                    <span className={`text-xs bg-green-200 ${dateClass}`}>Confirmed</span><CiMenuKebab className='p-2 absolute right-0 xl:relative  top-11 xl:top-0 w-11 h-11 rounded-md bg-neutral-300 shadow-sm cursor-pointer dark:bg-neutral-700 hover:bg-neutral-500 dark:hover:bg-neutral-900 hover:text-white transition duration-500' onClick={() => setShow(!show)} />
+                                <p className='font-bold text-lg flex xl:flex-row  justify-between relative flex-col items-center gap-3'>Booking Date : {booking.BookingDate} 
+                                  
+                                    <CiMenuKebab className='p-2 absolute right-0 xl:relative  top-11 xl:top-0 w-11 h-11 rounded-md bg-neutral-300 shadow-sm cursor-pointer dark:bg-neutral-700 hover:bg-neutral-500 dark:hover:bg-neutral-900 hover:text-white transition duration-500' onClick={() => setShow(!show)} />
                                 </p>
-                                <p className={`text-3xl mt-4 ${dateClass}`}><RiMoneyRupeeCircleFill />Fare : {booking.fare}</p>
-                                <div className='flex gap-4 mt-4 flex-col xl:flex-row'><p className={dateClass}><IoMdArrowRoundUp />Pickup Date : {booking.trip_date}</p> <p className={`${dateClass} bg-pink-200`}><PiClockCountdownFill />Pickup Time: 11:45</p>
+                                <p className={`text-3xl mt-2 bg-orange-200 ${dateClass}`}><RiMoneyRupeeCircleFill />Fare : {booking.fare}</p>
+                                   <div className="flex items-center justify-start mt-4"> 
+                                <span className={`text-xs bg-teal-200 ${dateClass}`}> Booking ID : {booking.bookingID}</span> 
+                                    <span className={`text-xs bg-amber-200 ${dateClass}`}>{booking.booking_type}</span>
+                                    <span className={`text-xs bg-green-200 ${dateClass}`}>{booking.status}</span>
+                                    </div>
+
+                                
+                                <div className='flex gap-4 mt-4 flex-col xl:flex-row text-md '><p className={`bg-blue-100 ${dateClass}`}><IoMdArrowRoundUp />Pickup Date : {booking.trip_date}</p> <p className={`${dateClass} bg-pink-200`}><PiClockCountdownFill />Pickup Time: 11:45</p>
                                    {(booking.return_pickup_date !== null)&& <p className={dateClass}><IoMdArrowRoundDown />Return Date : {booking.return_pickup_date}</p>}
                                 </div>
                                 {show &&
@@ -113,17 +119,18 @@ const Page = () => {
                                 }
                             </div>
                             {/* ==============================  Trip Route and Fares */}
-                            <div className='flex  justify-between mt-5 xl:flex-row flex-col'>
-                                <div>
-                                    <p className='font-bold text-lg mb-2 gap-2 flex items-center'><HiHome />Form : <span className='font-light text-gray-600 '>{booking.origin_address}</span></p>
-                                    <p className='font-bold text-lg mb-2 gap-2 items-center flex'><HiHomeModern />To : <span className='font-light text-gray-600 '>{booking.destination_address}</span></p>
-                                    <p className='font-bold text-lg mb-2 gap-2 items-center flex'><PiRoadHorizonFill />Distance : <span className='font-light text-gray-600 '>{booking.km}</span></p>
-                                    <p className={`font-bold text-lg mb-2 gap-2 items-center flex w-fit`}><ImLocation2 />Route : <span className='font-light text-gray-600 '> <a href={booking.google_maps_url}></a> Click to View your Route</span></p>
+                            <div className='flex  justify-start mt-5 xl:flex-row flex-col'>
+                                <div className="mr-5">
+                                    <p className='font-bold text-sm mb-2 gap-2 flex items-center'><HiHome />Form : <span className='font-light  '>{booking.origin_address}</span></p>
+                                    <p className='font-bold text-sm mb-2 gap-2 items-center flex'><HiHomeModern />To : <span className='font-light  '>{booking.destination_address}</span></p>
+                                    <p className='font-bold text-sm mb-2 gap-2 items-center flex'><PiRoadHorizonFill />Distance : <span className='font-light  '>{booking.km}</span></p>
+                                    <p className={`font-bold text-sm mb-2 gap-2 items-center flex w-fit`}><ImLocation2 />Route : <span className='font-light  '> <a href={booking.google_maps_url}></a> Click to View your Route</span></p>
                                 </div>
                                 <div>
-                                    <p className='font-bold text-lg mb-2 gap-2 flex items-center'><RiMoneyRupeeCircleFill />Fare : <span className=' text-xl text-gray-600 '>{booking.fare}</span></p>
-                                    <p className='font-bold text-lg mb-2 gap-2 items-center flex'><RiDiscountPercentFill />Discount : <span className='font-light text-gray-600 '>{booking.discount}</span></p>
-                                    <p className={`font-bold text-lg mb-2 gap-2 items-center flex w-fit`}><BiSolidTrafficBarrier />Tolls : <span className='font-light  text-gray-600 '>{booking.tollCharge}</span></p>
+                                <p className='font-bold text-sm mb-2 gap-2 flex items-center'><MdDirectionsCar />Vehicle : <span className=' font-light  '>{booking.vehicle} or Equivalent</span></p>
+                                <p className='font-bold text-sm mb-2 gap-2 flex items-center'><RiMoneyRupeeCircleFill />Fare : <span className=' text-xl  '>{booking.fare}</span></p>
+                                    <p className='font-bold text-sm mb-2 gap-2 items-center flex'><RiDiscountPercentFill />Discount : <span className='font-light  '>{booking.discount}</span></p>
+                                    <p className={`font-bold text-sm mb-2 gap-2 items-center flex w-fit`}><BiSolidTrafficBarrier />Tolls : <span className='font-light   '>{booking.tollCharge}</span></p>
                                 </div>
                             </div>
                         </div>
