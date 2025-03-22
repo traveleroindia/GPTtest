@@ -10,6 +10,7 @@ export default function TripCalculator() {
     const AvailableVehicles = [1, 2,5, 6];
 
    
+   
     
     let fareDetails = [];
 
@@ -18,7 +19,8 @@ export default function TripCalculator() {
        
        TripFareCalculate(AvailableVehicles, TripType, Distance);  // input arguments
        getFareDetails(fareDetails); // sending parent updated fare details
-
+        console.log(Distance);
+        
     }, [Distance]);
 
     function TripFareCalculate(Vehiclefilter, TripType, km) {
@@ -34,7 +36,9 @@ export default function TripCalculator() {
                     const discount = Math.round(fare*.1); // 10% Discount on One way trip
                     const fareWithAddedDiscount = fare + discount
                     const finalFare = fare;
-
+                    console.log(km);
+                    
+                    
                     fareDetails.push({
                         fare: Math.round(fareWithAddedDiscount),
                         discount : Math.round(discount),

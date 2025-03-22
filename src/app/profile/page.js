@@ -65,9 +65,9 @@ const Page = () => {
         );
     }
     return (
-        <div className='w-full dark:bg-[--dark] flex items-start justify-center flex-col xl:flex-row   '>
+        <div className='w-full dark:bg-[--dark] flex items-start justify-center flex-col xl:flex-row    '>
             {/* =========================================================== Profile Sidebar */}
-            <div className=' xl:w-1/3 xl:h-[90vh]  '>
+            <div className=' xl:w-1/3 xl:h-[100vh] sticky  left-0 top-0 bg-gray-200  border-r border-gray-600 '>
                 <div> <img src="https://random-image-pepebigotes.vercel.app/api/random-image" alt="" /> </div>
                 <h2 className='text-4xl font-bold uppercase  text-center pt-4'>{user.name}</h2>
                 <div className='flex justify-center gap-10 py-3 text-xl border-b  border-gray-600 '><span className='flex justify-start w-max items-center'><FaUser className='mr-2  ' />User ID : </span><p>{user.userId}</p></div>

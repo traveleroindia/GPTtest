@@ -59,7 +59,7 @@ export default function BookingsMain() {
 
     const DistanceandTime = (distance, time) => {                            // Function is called from DistanceAPICall
         console.log("Distance and Time:", distance, time);
-        setDistance(Math.ceil(parseFloat(distance))); // Corrected variable name and parentheses
+        setDistance(distance); // Corrected variable name and parentheses
         setTime(time); // This remains the same
     };
     

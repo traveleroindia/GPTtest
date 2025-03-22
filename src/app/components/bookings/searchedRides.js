@@ -79,7 +79,7 @@ Router.push('/user')
                                                   <IoCloseCircleSharp className="w-5 h-5 absolute right-1 top-1 hover:text-gray-200  " 
                                                   onClick={() => toggleBadge(index)} />
                                                   <br />
-                                                  <li>Pay {e.perkmCharge} rupees/Km after {e.calculatedBaseKM} Km</li>
+                                                  <li>Pay {e.perkmCharge} rupees/Km after {e.km} Km</li>
                                                   <li>Parking is payable by Passanger</li>
                                                   <li>Night Charges starts after 07:00 PM</li>
                                                   <li>Night Charges {e.nightCharge} INR till 08:00 AM</li>
@@ -138,7 +138,7 @@ Router.push('/user')
                                       {/* =======================================   Book */}
                                       <td className="  place-items-center text-center"> <div className="w-full flex flex-col items-center justify-center">
                                           <GiPathDistance className="w-5 h-5 text-center" />
-                                          <p className="text-xs font-semibold flex gap-3">{e.calculatedBaseKM} Km </p>
+                                          <p className="text-xs font-semibold flex gap-3">{e.km} Km </p>
                                           <button className="shadow-md px-4 py-2  mt-2 cursor-pointer bg-[--c1] capitalize transition-colors duration-300 transform bg-green-300  text-black rounded-md text-2xl font-semibold hover:bg-green-400 hover:scale-95 flex items-center justify-center " onClick={()=>CaptureSelectionInfo(index)}>BOOK<GoChevronRight /></button></div></td>
 
                                   </tr> )) }

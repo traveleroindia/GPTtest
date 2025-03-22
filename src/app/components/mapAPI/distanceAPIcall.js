@@ -41,13 +41,15 @@ const Dlng = Number(DestinationLng)
     service
       .getDistanceMatrix(request)
       .then((response) => {
-    const distance = response.rows[0]?.elements[0]?.distance?.text;
+    const distance = Math.round((response.rows[0]?.elements[0]?.distance?.value)/1000);
     const time = response.rows[0]?.elements[0]?.duration?.text;
+    console.log(distance);
+    
 
     DistanceandTime(distance,time)
 
-        // console.log(`Distance Matrix Response:',${distance}`);
-        // console.log(`Distance Matrix Response:',${time}`);
+        console.log(`Distance Matrix Response:',${distance}`);
+        console.log(`Distance Matrix Response:',${time}`);
         console.log(response.rows[0]);
 
       })
