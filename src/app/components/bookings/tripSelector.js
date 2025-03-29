@@ -10,6 +10,8 @@ export default function TripSelector() {
 
     function handleClick(arg) {
             setTripType(arg)
+            console.log(arg);
+            
     }
 
 

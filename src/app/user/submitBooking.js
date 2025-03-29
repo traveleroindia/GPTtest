@@ -70,9 +70,22 @@ const PostBooking = async () => {
         }
 
         if (response.status === 201) {
-            setBookingConfirm('Your Booking has been created. You will receive a confirmation email from us on your registered E-mail Address.');
             localStorage.clear('BookingData');
             localStorage.clear("RidesSearched");
+        
+            // Show the first message for 2 seconds
+            setBookingConfirm('Your Booking has been created. You will receive a confirmation email from us on your registered E-mail Address.');
+            
+            setTimeout(() => {
+                // Show the second message for 3 seconds
+                setBookingConfirm('Taking you to your Bookings and Profile information page');
+        
+                setTimeout(() => {
+                    // Redirect to the profile page
+                    window.location.href = "./profile";
+                }, 3000); // Wait 3 seconds before redirecting
+        
+            }, 2000); // Wait 2 seconds before showing the second message
         }
         
         return await response.json(); // Await the JSON parsing for successful response

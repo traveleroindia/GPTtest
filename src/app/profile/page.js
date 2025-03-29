@@ -25,11 +25,15 @@ import { useAuth } from '../components/providers/userProvider';
 import { useRouter } from 'next/navigation';
 import { MdDirectionsCar } from "react-icons/md";
 import useFetchBookings from './fetchBookings';
+import { useCookies } from 'react-cookie'; // Assuming you're using the react-cookie library for managing cookies
 
 
 const dateClass = ' flex items-center gap-2  px-4 py-2 rounded-full mr-4 font-semibold text-gray-800  text-md shadow-xl w-fit'
 
 const Page = () => {
+    const [cookies] = useCookies(['user']);
+    const CheckLogin = cookies.user;
+
 
     const {bookings, user,loading, error} = useFetchBookings();
     // console.log(bookings);
@@ -39,22 +43,22 @@ const Page = () => {
     const ref = useRef();
 
     let { userDetails } = useAuth();
-    console.log(bookings);
+    // console.log(bookings);
 
 
 
     const menuref = useOnclickOutside(() => {
         setShow(false)
         console.log(show);
+        console.log(userDetails);
 
     })
-    
+  
     useEffect(() => {
-        if(userDetails === null){
+        if(CheckLogin === undefined){
             router.push('/user'); // Redirect to the user page if the cookie is not present
-
         }
-    }, [userDetails]); // Run this effect on component mount only
+    }, [CheckLogin]); // Run this effect on component mount only
 
     // Show loading spinner while checking userDetails
     if (loading === true) {
