@@ -1,8 +1,35 @@
 import { connectDB } from "../../../dbConnection";
 import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken"; 
+
+const jwtSecret = process.env.JWT_SECRET_KEY; // Ensure this is set correctly in your environment
+
+
+
+
+
+
 
 export async function POST(req) {
     try {
+
+
+ const cookie = req.cookies.get('user')?.value;  
+        if (!cookie) {
+            return NextResponse.json({ message: 'No token found' }, { status: 401 });
+        }
+
+        // Verify the JWT
+        console.log("Cookie retrieved:", cookie);
+        const decoded = jwt.verify(cookie, jwtSecret);
+
+        const userId = decoded.userId; // Extract userId from decoded JWT payload
+        console.log("Details found:", decoded);
+
+
+
+
+
         const db = await connectDB();
         const body = await req.json();
         // console.log(body);
@@ -24,8 +51,9 @@ export async function POST(req) {
 
         // Update the user's record with the alternate phone number
         const updateQuery = 'UPDATE user SET alt_phone = ? WHERE id = ?';
+     
         await db.query(updateQuery, [body.alt_phone, body.id]);
-
+     
         return NextResponse.json({ message: 'Alternate number added successfully' }, { status: 200 });
 
     } catch (error) {
